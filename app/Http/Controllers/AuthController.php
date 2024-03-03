@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -41,8 +42,9 @@ class AuthController extends Controller
         $user = User::create($request->all());
         if($user){
             $roleId = $request->input('role_id');
-            for($i = 1; $i <= 9; $i++){
-                $user->permissions()->attach($i);
+            $permssionId = Role::where('id',$roleId)->with('permissions')->first()->permissions->pluck('id')->toArray();
+            foreach($permssionId as $id){
+                $user->permissions()->attach($id);
             }
             $user->roles()->attach($roleId);
             return redirect('/login');

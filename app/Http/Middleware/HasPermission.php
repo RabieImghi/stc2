@@ -23,11 +23,11 @@ class HasPermission
             $permissionsRole = $user->roles->first()->permissions->pluck('name')->toArray();
             $permissionsUser = $user->permissions->pluck('name')->toArray();
             if(in_array($uri, $permissionsRole) && in_array($uri, $permissionsUser)) return $next($request);
-            else abort(403, 'Unauthorized action.');
+            else if($uri != 'error') return  redirect('/error'); else return $next($request);
         }else{
             $permissionsRole = Role::where('name', 'visiteur')->first()->permissions->pluck('name')->toArray();
             if(in_array($uri, $permissionsRole)) return $next($request);
-            else abort(403, 'Unauthorized action.');
+            else return redirect('/error');
         }
     }
 }

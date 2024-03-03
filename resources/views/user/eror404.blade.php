@@ -1,6 +1,11 @@
 @extends('user.layout')
 
 @section('linksStyle')
+    <style>
+        header, footer{
+                display: none !important;
+            }
+    </style>
     <link rel="stylesheet" href="./assets/eror404_files/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/eror404_files/aos.css">
     <link rel="stylesheet" href="./assets/eror404_files/all.min.css">
@@ -16,9 +21,9 @@
                 <img class="d-block mb-4" src="./assets/eror404_files/404.png" alt="404 image">
                 <h3 class="color--gradient-y mb-3">Opps! This Page Not Found</h3>
                 <p>We are working hard to bring you new experience</p>
-                <div class="text-center mt-5">
-                    <a href="https://thetork.com/demos/html/uevent/index.html" class="default-btn">Go Back To Home</a>
-                </div>
+                {{-- <div class="text-center mt-5">
+                    <a href="/" class="default-btn">Go Back To Home</a>
+                </div> --}}
             </div>
             <div class="error__thumb">
                 <a href="https://thetork.com/demos/html/uevent/index.html"><img src="./assets/eror404_files/01.jpg"
@@ -43,6 +48,7 @@
 
 @section('style')
     <style type="text/css">
+        
         :host,
         :root {
             --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Solid";

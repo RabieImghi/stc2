@@ -67,7 +67,8 @@
             <td class="p-4">{{$role->name}}</td>
             <td class="p-4 d-flex flex-wrap gap-2">
                 @foreach($role->permissions as $permission)
-                <span onclick="aficheDetail({{$role->id}},{{$permission->id}},'{{$permission->name}}')" data-bs-toggle="modal" data-bs-target="#exampleModal" class="cursor-point fw-normal mb-1 prmissions">
+                <span onclick="aficheDetail({{$role->id}},{{$permission->id}},'{{$permission->name}}')" 
+                    data-bs-toggle="modal" data-bs-target="#exampleModal" class="cursor-point fw-normal mb-1 prmissions">
                     {{$permission->name}}</span>
                 @endforeach
             </td>

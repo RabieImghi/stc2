@@ -16,7 +16,7 @@
                 <div class="col-lg-5">
                     <div class="account__wrapper">
                         <h3 class="title">Reset Password</h3>
-                        <form class="account__form">
+                        <form class="account__form" method="POST">
                             <div class="form-floating mb-4">
                                 <input type="email" class="form-control" id="floatingInput"
                                     placeholder="name@example.com">

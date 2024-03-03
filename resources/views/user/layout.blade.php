@@ -66,7 +66,7 @@
                                     </span>
                                 </a>
                             @else
-                                <a href="/AuthRegister" class="default-btn move-right">
+                                <a href="/login" class="default-btn move-right">
                                     <span>Join Now <svg class="svg-inline--fa fa-arrow-right" aria-hidden="true"
                                             focusable="false" data-prefix="fas" data-icon="arrow-right" role="img"
                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">

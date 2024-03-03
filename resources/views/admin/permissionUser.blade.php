@@ -20,7 +20,7 @@
             <label class="fw-bold text-secondary"> User</label>
             <select name="user_id" class="form-control mt-1">
                 @foreach($users as $user)
-                <option value="{{$user->id}}" selected>{{$user->name}} / {{$user->id}}</option>
+                <option value="{{$user->id}}" selected>{{$user->name}}</option>
                 @endforeach
             </select>
         </div>
@@ -57,7 +57,6 @@
 <table class="tabel me-4">
     <thead class="">
         <tr>
-            <th class="p-4">Id</th>
             <th class="p-4">Name</th>
             <th class="p-4">Email</th>
             <th class="p-4">Role</th>
@@ -67,7 +66,6 @@
     <tbody>
         @foreach($users as $user)
         <tr>
-            <td class="p-4">{{$user->id}}</td>
             <td class="p-4">{{$user->name}}</td>
             <td class="p-4">{{$user->email}}</td>
             <td class="p-4">{{$user->roles[0]->name }}</td>

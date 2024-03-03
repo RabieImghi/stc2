@@ -22,7 +22,7 @@ Route::get('/Events', [EventController::class, 'events']);
 Route::get('/EventsDetails', [EventController::class, 'eventsDetail']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/AuthRegister', [AuthController::class, 'Register']);
-Route::get('/AuthResetPassword', [AuthController::class, 'ResetPassword'])->middleware('auth');
+Route::get('/AuthResetPassword', [AuthController::class, 'ResetPassword']);
 
 Route::post('/Register', [AuthController::class, 'store']);
 Route::post('/login', [AuthController::class, 'loginUser']);
@@ -35,3 +35,10 @@ Route::post('/deletePermissionUser', [PermissionController::class, 'deletePermis
 Route::get('/PermissionRole', [UserContreoller::class, 'PermissionRole']);
 Route::post('/AddPermissionRole', [PermissionController::class, 'AddPermissionRole']);
 Route::post('/deletePermissionRole', [PermissionController::class, 'deletePermissionRole']);
+Route::get('/error', [UserContreoller::class, 'error']);
+
+
+Route::get('/GestionUsers', [UserContreoller::class, 'GestionUsers']);
+Route::post('/deleteUser', [UserContreoller::class, 'deleteUser']);
+Route::post('/updateRoleUser', [UserContreoller::class, 'updateRoleUser']);
+
