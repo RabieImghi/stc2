@@ -31,4 +31,7 @@ Route::get('/logout', [AuthController::class, 'logout']);
 Route::get('/admin', [UserContreoller::class, 'index']);
 Route::get('/PermissionUser', [UserContreoller::class, 'permissionUser']);
 Route::post('/AddPermissionUser', [PermissionController::class, 'addPermissionUser']);
-
+Route::post('/deletePermissionUser', [PermissionController::class, 'deletePermissionUser']);
+Route::get('/PermissionRole', [UserContreoller::class, 'PermissionRole']);
+Route::post('/AddPermissionRole', [PermissionController::class, 'AddPermissionRole']);
+Route::post('/deletePermissionRole', [PermissionController::class, 'deletePermissionRole']);

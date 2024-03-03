@@ -35,11 +35,12 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required'
+            'password' => 'required',
+            'role_id'=>'required|in:2,3'
         ]);
         $user = User::create($request->all());
         if($user){
-            $roleId = 2;
+            $roleId = $request->input('role_id');
             for($i = 1; $i <= 9; $i++){
                 $user->permissions()->attach($i);
             }

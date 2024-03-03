@@ -38,6 +38,12 @@
                                 <label for="floatingInput">Email address</label>
                             </div>
                             <div class="form-floating mb-4">
+                                <select name="role_id" class="form-control" style="background: #f5f5f5">
+                                    <option value="2">Utilisateur</option>
+                                    <option value="3">Organisateur</option>
+                                </select>
+                            </div>
+                            <div class="form-floating mb-4">
                                 <input type="password" name="password" class="form-control" id="password"
                                     placeholder="Password">
                                 <label for="floatingPassword">Password</label>

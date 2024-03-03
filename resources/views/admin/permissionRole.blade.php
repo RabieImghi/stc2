@@ -1,5 +1,5 @@
 @extends('admin.layout')
-@section('permissionUser','active')
+@section('permissionRole','active')
 @section('content')
 <div class="headerSection mt-3">
     <h2>Permissions</h2>
@@ -14,19 +14,19 @@
         New Product 
     </div>
     <p class="text-secondary h6">Add information and add new product.</p>
-    <form action="/AddPermissionUser" method="POST">
+    <form action="/AddPermissionRole" method="POST">
         @csrf
         <div class="group mt-3">
             <label class="fw-bold text-secondary"> User</label>
-            <select name="user_id" class="form-control mt-1">
-                @foreach($users as $user)
-                <option value="{{$user->id}}" selected>{{$user->name}} / {{$user->id}}</option>
+            <select name="role_id" class="form-control mt-1">
+                @foreach($roles as $role)
+                <option value="{{$role->id}}" selected>{{$role->name}}</option>
                 @endforeach
             </select>
         </div>
         <div class="group mt-3">
             <label class="fw-bold text-secondary"> Permissions</label>
-            <select class="form-select mt-1" name="permisssion_id[]" size="20" id="multiple-select-field" data-placeholder="Choose anything" multiple>
+            <select class="form-select mt-1" name="permission_id[]" size="20" id="multiple-select-field" data-placeholder="Choose anything" multiple>
                 @foreach($permissions as $permission)
                 <option value="{{$permission->id}}">{{$permission->name}}</option>
                 @endforeach
@@ -54,26 +54,21 @@
     });
     
 </script>
-<table class="tabel me-4">
+<table class="tabel me-4" style="width: 98.3%">
     <thead class="">
         <tr>
-            <th class="p-4">Id</th>
             <th class="p-4">Name</th>
-            <th class="p-4">Email</th>
-            <th class="p-4">Role</th>
             <th class="p-4">Permissions</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($users as $user)
+        @foreach($roles as $role)
         <tr>
-            <td class="p-4">{{$user->id}}</td>
-            <td class="p-4">{{$user->name}}</td>
-            <td class="p-4">{{$user->email}}</td>
-            <td class="p-4">{{$user->roles[0]->name }}</td>
+            <td class="p-4">{{$role->name}}</td>
             <td class="p-4 d-flex flex-wrap gap-2">
-                @foreach($user->permissions as $permission)
-                <span onclick="aficheDetail({{$user->id}},{{$permission->id}},'{{$permission->name}}')" data-bs-toggle="modal" data-bs-target="#exampleModal" class="cursor-point fw-normal mb-1 prmissions">{{$permission->name}}</span>
+                @foreach($role->permissions as $permission)
+                <span onclick="aficheDetail({{$role->id}},{{$permission->id}},'{{$permission->name}}')" data-bs-toggle="modal" data-bs-target="#exampleModal" class="cursor-point fw-normal mb-1 prmissions">
+                    {{$permission->name}}</span>
                 @endforeach
             </td>
         </tr>
@@ -145,13 +140,13 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="/deletePermissionUser" method="POST">
+            <form action="/deletePermissionRole" method="POST">
                 @csrf
                 <div class="modal-header">
                 <h5 class="modal-title" id="deleteModalLabel">Delete Confirmation</h5>
                 </div>
                 <div class="modal-body">
-                <input type="hidden" name="user_id" id="user_id">
+                <input type="hidden" name="role_id" id="user_id">
                 <input type="hidden" name="permission_id" id="permission_id">
                 Are you sure you want to delete this permission? <span id="permission" class=""></span>
                 </div>
@@ -160,8 +155,6 @@
                 </div>
             </form>
         </div>
-            
-          
     </div>
 </div>
 <script>
