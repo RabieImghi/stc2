@@ -17,37 +17,46 @@
                 <div class="col-lg-5">
                     <div class="account__wrapper">
                         <h3 class="title">Sign Up</h3>
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <form class="account__form" action="/Register" method="POST">
                             @csrf
                             <div class="form-floating mb-4">
-                                <input type="text" class="form-control" id="floatingInput-user" placeholder="username">
+                                <input type="text" name="name" class="form-control" id="name"  placeholder="username">
                                 <label for="floatingInput-user">User name</label>
                             </div>
                             <div class="form-floating mb-4">
-                                <input type="email" class="form-control" id="floatingInput"
+                                <input type="email" name="email" class="form-control" id="email"
                                     placeholder="name@example.com">
                                 <label for="floatingInput">Email address</label>
                             </div>
                             <div class="form-floating mb-4">
-                                <input type="password" class="form-control" id="floatingPassword"
+                                <input type="password" name="password" class="form-control" id="password"
                                     placeholder="Password">
                                 <label for="floatingPassword">Password</label>
                             </div>
                             <div class="form-floating mb-4">
-                                <input type="password" class="form-control" id="floatingPassword2"
+                                <input type="password" name="confirmPassword" class="form-control" id="confirmPassword"
                                     placeholder="Confirm Password">
                                 <label for="floatingPassword2">Confirm Password</label>
                             </div>
                             <div class="form-group">
                                 <div class="d-flex justify-content-between flex-wrap pt-sm-2">
                                     <div class="checkgroup">
-                                        <input type="checkbox" name="remember" id="remember">
+                                        <input type="checkbox" required name="remember" id="remember">
                                         <label for="remember">Accept Terms &amp; Policy</label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button class="d-block default-btn move-top"><span>Signup Now</span></button>
+                                <button class="d-block default-btn move-top" id="signupButton" disabled><span>Signup Now</span></button>
                             </div>
                         </form>
                         <div class="account-bottom">
@@ -66,6 +75,58 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var name = document.getElementById('name');
+            var email = document.getElementById('email');
+            var password = document.getElementById('password');
+            var confirmPassword = document.getElementById('confirmPassword');
+            var signupButton = document.getElementById('signupButton');
+
+            function validateForm() {
+                if (name.value === '' || email.value === '' || password.value !== confirmPassword.value) {
+                    signupButton.disabled = true;
+                    signupButton.style.cursor = "pointer";
+                } else {
+                    signupButton.disabled = false;
+                }
+            }
+
+            name.addEventListener('input', function (){
+                if (name.value === '') {
+                    name.style.border = "1px solid red";
+                } else {
+                    name.style.border = "1px solid green";
+                }
+                validateForm();
+            });
+            email.addEventListener('input', function(){
+                if (email.value === '') {
+                    email.style.border = "1px solid red";
+                } else {
+                    email.style.border = "1px solid green";
+                }
+                validateForm();
+            });
+            password.addEventListener('input', function(){
+                if (password.value === '') {
+                    password.style.border = "1px solid red";
+                } else {
+                    password.style.border = "1px solid green";
+                }
+                validateForm();
+            });
+            confirmPassword.addEventListener('input', 
+            function(){
+                if (confirmPassword.value === '' || confirmPassword.value !== password.value) {
+                    confirmPassword.style.border = "1px solid red";
+                } else {
+                    confirmPassword.style.border = "1px solid green";
+                }
+                validateForm();
+            });
+        });
+    </script>
 @endsection
 
 @section('liknsJs')

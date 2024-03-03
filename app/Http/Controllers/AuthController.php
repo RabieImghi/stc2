@@ -25,12 +25,15 @@ class AuthController extends Controller
             return redirect('/Events');
         }
     }
-    // public function store(Request $request){
-    //     $request->validate([
-    //         'name' => 'required',
-    //         'email' => 'required|email',
-    //         'password' => 'required'
-    //     ]);
-    //     User::create($request->all());
-    // }
+    public function store(Request $request){
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required'
+        ]);
+        $user= User::create($request->all());
+        if($user){
+            return redirect('/login');
+        }
+    }
 }
