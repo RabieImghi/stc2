@@ -15,17 +15,17 @@
             <div class="row g-5 align-items-center flex-md-row-reverse">
                 <div class="col-lg-5">
                     <div class="account__wrapper">
-                        <h3 class="title">Reset Password</h3>
-                        <form class="account__form" method="POST" action="ResetPassword">
+                        <h3 class="title">Entre Code</h3>
+                        <form class="account__form" method="POST" action="checkPasswordCode">
                             @csrf
                             <div class="form-floating mb-4">
-                                <input type="email" name="email" class="form-control" id="floatingInput"
-                                    placeholder="name@example.com">
-                                <label for="floatingInput">Email address</label>
+                                <input type="text" name="code" class="form-control" id="floatingInput"
+                                    placeholder="Code">
+                                <label for="">Code</label>
                             </div>
 
                             <div class="form-group">
-                                <button class="d-block default-btn move-top"><span>Send Code</span></button>
+                                <button class="d-block default-btn move-top"><span>Suivant</span></button>
                             </div>
                         </form>
                     </div>

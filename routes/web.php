@@ -23,6 +23,9 @@ Route::get('/EventsDetails', [EventController::class, 'eventsDetail']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/AuthRegister', [AuthController::class, 'Register']);
 Route::get('/AuthResetPassword', [AuthController::class, 'ResetPassword']);
+Route::post('/ResetPassword', [AuthController::class, 'sendPasswordCode']);
+Route::post('/checkPasswordCode', [AuthController::class, 'checkPasswordCode']);
+Route::post('/changePassword', [AuthController::class, 'changePassword']);
 
 Route::post('/Register', [AuthController::class, 'store']);
 Route::post('/login', [AuthController::class, 'loginUser']);
