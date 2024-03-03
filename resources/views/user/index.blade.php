@@ -1065,6 +1065,7 @@
     <script src="./assets/index_files/lightcase.js.téléchargé"></script>
     <script src="./assets/index_files/purecounter_vanilla.js.téléchargé"></script>
     <script src="./assets/index_files/custom.js.téléchargé"></script>
+   
 @endsection
 
 @section('style')

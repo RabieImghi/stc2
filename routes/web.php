@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\UserContreoller;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,4 +26,9 @@ Route::get('/AuthResetPassword', [AuthController::class, 'ResetPassword'])->midd
 
 Route::post('/Register', [AuthController::class, 'store']);
 Route::post('/login', [AuthController::class, 'loginUser']);
+Route::get('/logout', [AuthController::class, 'logout']);
+
+Route::get('/admin', [UserContreoller::class, 'index']);
+Route::get('/PermissionUser', [UserContreoller::class, 'permissionUser']);
+Route::post('/AddPermissionUser', [PermissionController::class, 'addPermissionUser']);
 

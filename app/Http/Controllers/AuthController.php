@@ -21,8 +21,14 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ]);
+        
         if(auth()->attempt($request->only('email', 'password'))){
-            return redirect('/Events');
+            if(auth()->user()->roles->first()->name == 'Administrateur'){
+                return redirect('/admin');
+            }
+            return redirect('/');
+        }else{
+            return redirect('/login');
         }
     }
     public function store(Request $request){
@@ -31,9 +37,18 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required'
         ]);
-        $user= User::create($request->all());
+        $user = User::create($request->all());
         if($user){
+            $roleId = 2;
+            for($i = 1; $i <= 9; $i++){
+                $user->permissions()->attach($i);
+            }
+            $user->roles()->attach($roleId);
             return redirect('/login');
         }
+    }
+    public function logout(){
+        auth()->logout();
+        return redirect('/');
     }
 }

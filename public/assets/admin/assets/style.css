@@ -1,0 +1,110 @@
+header{
+    position: sticky !important;;
+    top: 0 !important;;
+    height: 80px !important;
+    box-shadow: 2px 1px 30px rgba(211, 211, 211, 0.422);
+}
+header, aside{
+    background-color: white;
+}
+aside{
+    width: 350px !important;
+    box-shadow: 2px 1px 30px rgba(211, 211, 211, 0.501);
+    height: calc(100vh - 80px) !important;
+    z-index: 1 !important;
+}
+section {
+    width: 100% !important;
+}
+.ml-100{
+    margin-left: 100px;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.btn-outline-primary{
+    border-color: black !important;
+    color: black !important;
+}
+.btn-outline-primary:hover{
+    background-color: #fb4c6e !important;
+    color: white !important;
+}
+.togl_menu{
+    margin-left: 80px;
+}
+.ml-2{
+    margin-left: 20px;
+}
+.nav-link{
+    color: black !important;
+}
+.nav-link.active, 
+.nav-link:hover{
+    color: white !important;
+    background-color: #fb4c6e;
+}
+
+h2{
+    color: #012970 !important;
+}
+.headerSection span span{
+    color: #0239987a;
+}
+.headerSection span{
+    color: #012970;
+}
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+}
+#asideBar {
+    transition: width 0.3s ease;
+}
+.card{
+    width: 300px;
+    height: 150px !important;
+}
+.card-title{
+    font-size: 20px !important;
+    color: #012970 !important;
+}
+.card_footr h6{
+    font-size: 30px !important;
+}
+.fas{
+    text-align: center;
+    padding-top: 15px;
+    width: 50px;
+    height: 50px;
+}
+#asideBar.collapsed {
+    width: 80px !important;
+    animation: fadeIn 0.3s ease;
+}
+@media screen and (max-width:580px) {
+    #asideBar {
+        display: none;
+    }
+    .togl_menu{
+        margin-left: 10px;
+    }
+    .search{
+        display: none;
+    }
+    #asideBar.collapsed {
+        position: absolute !important;
+        display: block;
+        width: 240px !important;
+    }
+    #asideBar.collapsed .nav-link span.ml-2{
+        display: inline !important;
+    }
+    .cataNameMobil{
+        display: none !important;
+    }
+}

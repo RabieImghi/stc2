@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\HasPermissionsTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -32,6 +33,12 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    public function roles(){
+        return $this->belongsToMany(Role::class, 'user_roles');
+    }
+    public function permissions(){
+        return $this->belongsToMany(Permission::class, 'user_permissions');
+    }
 
     /**
      * The attributes that should be cast.
