@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\UserContreoller;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,17 +33,28 @@ Route::post('/Register', [AuthController::class, 'store']);
 Route::post('/login', [AuthController::class, 'loginUser']);
 Route::get('/logout', [AuthController::class, 'logout']);
 
-Route::get('/admin', [UserContreoller::class, 'index']);
-Route::get('/PermissionUser', [UserContreoller::class, 'permissionUser']);
-Route::post('/AddPermissionUser', [PermissionController::class, 'addPermissionUser']);
-Route::post('/deletePermissionUser', [PermissionController::class, 'deletePermissionUser']);
-Route::get('/PermissionRole', [UserContreoller::class, 'PermissionRole']);
-Route::post('/AddPermissionRole', [PermissionController::class, 'AddPermissionRole']);
-Route::post('/deletePermissionRole', [PermissionController::class, 'deletePermissionRole']);
+Route::get('/admin', [UserContreoller::class, 'index'])->middleware('auth');
+Route::get('/PermissionUser', [UserContreoller::class, 'permissionUser'])->middleware('auth');
+Route::post('/AddPermissionUser', [PermissionController::class, 'addPermissionUser'])->middleware('auth');
+Route::post('/deletePermissionUser', [PermissionController::class, 'deletePermissionUser'])->middleware('auth');
+Route::get('/PermissionRole', [UserContreoller::class, 'PermissionRole'])->middleware('auth');
+Route::post('/AddPermissionRole', [PermissionController::class, 'AddPermissionRole'])->middleware('auth');
+Route::post('/deletePermissionRole', [PermissionController::class, 'deletePermissionRole'])->middleware('auth');
 Route::get('/error', [UserContreoller::class, 'error']);
 
 
-Route::get('/GestionUsers', [UserContreoller::class, 'GestionUsers']);
-Route::post('/deleteUser', [UserContreoller::class, 'deleteUser']);
-Route::post('/updateRoleUser', [UserContreoller::class, 'updateRoleUser']);
+Route::get('/GestionUsers', [UserContreoller::class, 'GestionUsers'])->middleware('auth');
+Route::post('/deleteUser', [UserContreoller::class, 'deleteUser'])->middleware('auth');
+Route::post('/updateRoleUser', [UserContreoller::class, 'updateRoleUser'])->middleware('auth');
+
+Route::get('/Category', [CategoryController::class, 'index'])->middleware('auth');
+Route::post('/addCategory', [CategoryController::class, 'addCategory'])->middleware('auth');
+Route::post('/deleteCategory', [CategoryController::class, 'deleteCategory'])->middleware('auth');
+Route::post('/updateCategory', [CategoryController::class, 'updateCategory'])->middleware('auth');
+
+
+Route::get('/AddEvent', [EventController::class, 'addEventView'])->middleware('auth');
+Route::post('/AddNewEvent', [EventController::class, 'AddNewEvent'])->middleware('auth');
+
+
 

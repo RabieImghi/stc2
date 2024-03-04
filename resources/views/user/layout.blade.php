@@ -42,9 +42,21 @@
                                 <a href="#">Schedule</a>
 
                             </li>
-                            <li>
-                                <a href="/Events">Events</a>
-                            </li>
+                            
+                            @if(Auth::check() && Auth::user()->roles[0]->id == '3')
+                                <li class="menu-item-has-children">
+                                    <a href="#team">Events</a>
+                                    <ul class="submenu">
+                                        <li><a href="/Events">All Event</a></li>
+                                        <li><a href="/AddEvent">Add Event</a></li>
+                                    </ul>
+                                </li>
+                            @else
+                                <li>
+                                    <a href="/Events">Events</a>
+                                </li>
+                            @endif
+                            
                             <li>
                                 <a href="#">Pricing</a>
 
