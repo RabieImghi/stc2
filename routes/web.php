@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [EventController::class, 'index']);
 Route::get('/Events', [EventController::class, 'events']);
-Route::get('/EventsDetails', [EventController::class, 'eventsDetail']);
+Route::get('/EventsDetails/{id}', [EventController::class, 'eventsDetail']);
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/AuthRegister', [AuthController::class, 'Register']);
 Route::get('/AuthResetPassword', [AuthController::class, 'ResetPassword']);

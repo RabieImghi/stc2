@@ -20,7 +20,7 @@
 <body data-aos-easing="ease" data-aos-duration="400" data-aos-delay="0">
 
     <div class="preloader" style="display: none;">
-        <img src="./assets/index_files/preloader.gif" alt="Uevent">
+        <img src="{{asset('./assets/index_files/preloader.gif')}}" alt="Uevent">
     </div>
     <header class="header-section">
         <div class="header-bottom">
@@ -28,7 +28,7 @@
                 <div class="header-wrapper">
                     <div class="logo">
                         <a href="/">
-                            <img src="./assets/index_files/logo.png" alt="logo">
+                            <img src="{{asset('./assets/index_files/logo.png')}}" alt="logo">
                         </a>
                     </div>
                     <div class="menu-area">

@@ -14,8 +14,9 @@ class EventController extends Controller
         $events = Event::where('isPublish', 'publish')->with('user')->paginate(6);
         return view('user.events', compact('events'));
     }
-    public function eventsDetail(){
-        return view('user.eventsDetails');
+    public function eventsDetail($id){
+        $event = Event::where('id', $id)->with('user')->with('category')->first();
+        return view('user.eventsDetails', compact('event'));
     }
     public function addEventView(){
         $categories = Category::all();

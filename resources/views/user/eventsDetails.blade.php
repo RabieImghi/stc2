@@ -1,24 +1,24 @@
 @extends('user.layout')
 @section('title', 'Event Detail')
 @section('linksStyle')
-    <link rel="stylesheet" href="./assets/eventsDetails_files/bootstrap.min.css">
-    <link rel="stylesheet" href="./assets/eventsDetails_files/aos.css">
-    <link rel="stylesheet" href="./assets/eventsDetails_files/all.min.css">
-    <link rel="stylesheet" href="./assets/eventsDetails_files/lightcase.css">
-    <link rel="stylesheet" href="./assets/eventsDetails_files/swiper-bundle.min.css">
-    <link rel="stylesheet" href="./assets/eventsDetails_files/style.css">
+    <link rel="stylesheet" href="{{asset('./assets/eventsDetails_files/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('./assets/eventsDetails_files/aos.css')}}">
+    <link rel="stylesheet" href="{{asset('./assets/eventsDetails_files/all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('./assets/eventsDetails_files/lightcase.css')}}">
+    <link rel="stylesheet" href="{{asset('./assets/eventsDetails_files/swiper-bundle.min.css')}}">
+    <link rel="stylesheet" href="{{asset('./assets/eventsDetails_files/style.css')}}">
 @endsection
 
 @section('content')
     <section class="page-header bg--cover" style="background-image: url(assets/images/header/bg.jpg);">
         <div class="container">
             <div class="page-header__content text-center">
-                <h2 class="text-uppercase"> Speaker Details</h2>
+                <h2 class="text-uppercase"> Event Details</h2>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb justify-content-center mb-0">
                         <li class="breadcrumb-item"><a href="https://thetork.com/demos/html/uevent/index.html">Home</a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Speaker Details</li>
+                        <li class="breadcrumb-item active" aria-current="page">Event Details</li>
                     </ol>
                 </nav>
             </div>
@@ -32,26 +32,25 @@
                     <div class="col-lg-6">
                         <div class="team__single-thumb aos-init aos-animate" data-aos="fade-left"
                             data-aos-duration="900">
-                            <img src="./assets/eventsDetails_files/speaker.png" alt="speaker image">
+                            
+                            <img src="{{asset('./images/'.$event->image.'')}}" style="height: 400px" alt="speaker image">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="team__single-conent aos-init aos-animate" data-aos="fade-right"
                             data-aos-duration="900">
                             <div class="team__single-name">
-                                <h3>Jhon Abraham</h3>
-                                <p>Event Speaker</p>
+                                <h3>{{$event->title}}</h3>
+                                <p>{{$event->user->name}}</p>
                             </div>
                             <div class="team__single-text">
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde vero cumque delectus
-                                    error, dolores sapiente praesentium possimus repellendus quasi deserunt non,
-                                    accusamus ducimus. Impedit perspiciatis quas temporibus mollitia hic ex magni
-                                    necessitatibus quidem aut eveniet! Consectetur, aut. Tenetur, sunt enim? Lorem ipsum
-                                    dolor sit amet consectetur adipisicing elit. Magni neque debitis adipisci quos,
-                                    earum a eius. Odio illo inventore velit.</p>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius quo porro, voluptatem
-                                    repudiandae quisquam dignissimos doloremque minus beatae? Quos ab cum modi velit
-                                    quo, non culpa tenetur sed iusto .</p>
+                                <p>{{$event->description}}</p>
+                            </div>
+                            <div class="team__single-name">
+                                <h4>Category : {{$event->category->name}}</h4>
+                                <p>Date : {{$event->date}}</p>
+                                <p>Adresse : {{$event->adresse}}</p>
+                                <p>Place Disponible : {{$event->placeNumber}}</p>
                             </div>
                         </div>
                     </div>
@@ -67,8 +66,8 @@
                     <div class="col-12">
                         <div class="cta__content">
                             <h2>Reserve Your Ticket Now</h2>
-                            <a href="https://thetork.com/demos/html/uevent/speaker-single.html#"
-                                class="default-btn default-btn--secondary move-bottom"><span>Download Now <svg
+                            <a href="ReserveTickete/{{$event->id}}"
+                                class="default-btn default-btn--secondary move-bottom"><span>Reserve Now <svg
                                         class="svg-inline--fa fa-arrow-down" aria-hidden="true" focusable="false"
                                         data-prefix="fas" data-icon="arrow-down" role="img"
                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg="">
@@ -86,15 +85,15 @@
 @endsection
 
 @section('liknsJs')
-    <script src="./assets/eventsDetails_files/jquery-3.6.0.min.js.téléchargé"></script>
-    <script src="./assets/eventsDetails_files/bootstrap.bundle.min.js.téléchargé"></script>
-    <script src="./assets/eventsDetails_files/all.min.js.téléchargé"></script>
-    <script src="./assets/eventsDetails_files/swiper-bundle.min.js.téléchargé"></script>
-    <script src="./assets/eventsDetails_files/aos.js.téléchargé"></script>
-    <script src="./assets/eventsDetails_files/lightcase.js.téléchargé"></script>
-    <script src="./assets/eventsDetails_files/purecounter_vanilla.js.téléchargé"></script>
-    <script src="./assets/eventsDetails_files/countdown.min.js.téléchargé"></script>
-    <script src="./assets/eventsDetails_files/custom.js.téléchargé"></script>
+    <script src="{{asset('./assets/eventsDetails_files/jquery-3.6.0.min.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/bootstrap.bundle.min.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/all.min.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/swiper-bundle.min.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/aos.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/lightcase.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/purecounter_vanilla.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/countdown.min.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/custom.js.téléchargé')}}"></script>
 @endsection
 
 @section('style')
