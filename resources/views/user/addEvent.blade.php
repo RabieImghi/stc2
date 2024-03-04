@@ -59,6 +59,13 @@
                     <input required type="number" name="placeNumber" class="form-control mt-2" placeholder="0">
                 </div>
                 <div class="w-100 mt-3 mb-3">
+                    <label class="h5" >Accept Type</label>
+                    <select required name="acceptType" class="form-control" id="">
+                        <option value="auto">Automatique</option>
+                        <option value="man">Manuell</option>
+                    </select>
+                </div>
+                <div class="w-100 mt-3 mb-3">
                     <label class="h5" >Cetegory</label>
                     <select required name="category_id" class="form-control" id="">
                         @foreach($categories as $categorie)

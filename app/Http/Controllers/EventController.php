@@ -11,7 +11,8 @@ class EventController extends Controller
         return view('user.index');
     }
     public function events(){
-        return view('user.events');
+        $events = Event::where('isPublish', 'Publish')->with('user')->paginate(6);
+        return view('user.events', compact('events'));
     }
     public function eventsDetail(){
         return view('user.eventsDetails');
@@ -27,6 +28,7 @@ class EventController extends Controller
             'date' => 'required',
             'adresse'=> 'required',
             'placeNumber'=> 'required',
+            'acceptType'=> 'required|in:auto,man',
             'category_id' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
@@ -42,7 +44,7 @@ class EventController extends Controller
         $event->category_id = $request->category_id;
         $event->image = $imageName;
         $event->user_id = auth()->user()->id;
-        $event->acceptType = 'auto';
+        $event->acceptType = $request->acceptType;
         $event->isPublish = 'NonPublish';
         $event->save();
         return redirect('/Events');
