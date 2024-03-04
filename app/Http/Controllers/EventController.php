@@ -11,7 +11,7 @@ class EventController extends Controller
         return view('user.index');
     }
     public function events(){
-        $events = Event::where('isPublish', 'Publish')->with('user')->paginate(6);
+        $events = Event::where('isPublish', 'publish')->with('user')->paginate(6);
         return view('user.events', compact('events'));
     }
     public function eventsDetail(){
@@ -48,6 +48,27 @@ class EventController extends Controller
         $event->isPublish = 'NonPublish';
         $event->save();
         return redirect('/Events');
+    }
+    public function GestionEvents(){
+        $events = Event::where('isPublish','NonPublish')->with('category')->with('user')->get();
+        return view('admin.gestionEvents', compact('events'));
+    }
+    public function RefuseAccepEvent($action){
+        $action = explode('-', $action);
+        $event = Event::find($action[0]);
+        if($action[1] == 'accept'){
+            $event->isPublish = 'publish';
+            $event->save();
+        }else{
+            $imageName = $event->image;
+            $path = public_path('images').'/'.$imageName;
+            if(file_exists($path)){
+                unlink($path);
+            }
+            $event->delete();
+        }
+        
+        return redirect('/GestionEvents');
     }
     
 }

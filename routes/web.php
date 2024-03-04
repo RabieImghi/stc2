@@ -55,6 +55,9 @@ Route::post('/updateCategory', [CategoryController::class, 'updateCategory'])->m
 
 Route::get('/AddEvent', [EventController::class, 'addEventView'])->middleware('auth');
 Route::post('/AddNewEvent', [EventController::class, 'AddNewEvent'])->middleware('auth');
+Route::get('/GestionEvents', [EventController::class, 'GestionEvents'])->middleware('auth');
+Route::get('/RefuseAccepEvent/{action}', [EventController::class, 'RefuseAccepEvent'])->middleware('auth');
+
 
 
 
