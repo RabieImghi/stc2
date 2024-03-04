@@ -14,6 +14,7 @@
     <link rel="shortcut icon" href="https://thetork.com/demos/html/uevent/assets/images/favicon.png"
         type="image/x-icon">
     @yield('linksStyle')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style type="text/css" id="operaUserStyle"></style>
 </head>
 
@@ -112,6 +113,6 @@
         </div>
     </footer>
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </html>
 @yield('style')

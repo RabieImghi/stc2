@@ -51,7 +51,6 @@ class EventController extends Controller
         return redirect('/Events');
     }
     public function GestionEvents(){
-        $events = Event::where('isPublish','NonPublish')->with('category')->with('user')->get();
         return view('admin.gestionEvents', compact('events'));
     }
     public function RefuseAccepEvent($action){
@@ -70,6 +69,33 @@ class EventController extends Controller
         }
         
         return redirect('/GestionEvents');
+    }
+    public function ReserveTickete($id){
+        $event = Event::where('id', $id)->with('user')->with('category')->first();
+        $events = Event::find($id);
+        $url = url()->previous();
+        if($events->acceptType == 'auto'){
+            if($events->placeNumber > 0){
+                if($events->users()->where('user_id', auth()->user()->id)->count() == 0){
+                    $events->placeNumber = $events->placeNumber - 1;
+                    $events->save();
+                    $events->users()->attach(auth()->user()->id);
+                    session()->flash('success', 'You have successfully reserved a ticket for this event');
+                    return view('user.eventsDetails', compact('event'));
+                }  
+                else{
+                    session()->flash('error', 'You have already reserved a ticket for this event');
+                   return view('user.eventsDetails', compact('event'));
+                }  
+            }else{
+                session()->flash('error', 'There are no more places available for this event');
+                return view('user.eventsDetails', compact('event'));
+            }
+        }else{
+
+
+            return view('user.eventsDetails', compact('event'));
+        }
     }
     
 }

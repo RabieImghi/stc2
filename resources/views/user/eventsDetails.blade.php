@@ -66,7 +66,7 @@
                     <div class="col-12">
                         <div class="cta__content">
                             <h2>Reserve Your Ticket Now</h2>
-                            <a href="ReserveTickete/{{$event->id}}"
+                            <a href="/ReserveTickete/{{$event->id}}"
                                 class="default-btn default-btn--secondary move-bottom"><span>Reserve Now <svg
                                         class="svg-inline--fa fa-arrow-down" aria-hidden="true" focusable="false"
                                         data-prefix="fas" data-icon="arrow-down" role="img"
@@ -82,6 +82,18 @@
             </div>
         </div>
     </section>
+    {{-- @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "{{session('error')}}!",
+            });
+            sessionStorage.clear();
+            localStorage.clear();
+        </script>
+    @endif --}}
+    
 @endsection
 
 @section('liknsJs')

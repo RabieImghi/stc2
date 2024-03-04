@@ -57,6 +57,7 @@ Route::get('/AddEvent', [EventController::class, 'addEventView'])->middleware('a
 Route::post('/AddNewEvent', [EventController::class, 'AddNewEvent'])->middleware('auth');
 Route::get('/GestionEvents', [EventController::class, 'GestionEvents'])->middleware('auth');
 Route::get('/RefuseAccepEvent/{action}', [EventController::class, 'RefuseAccepEvent'])->middleware('auth');
+Route::get('/ReserveTickete/{id}', [EventController::class, 'ReserveTickete'])->middleware('auth');
 
 
 
