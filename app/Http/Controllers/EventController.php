@@ -53,6 +53,7 @@ class EventController extends Controller
         return redirect('/Events');
     }
     public function GestionEvents(){
+        $events = Event::where('isPublish','NonPublish')->with('category')->with('user')->get();
         return view('admin.gestionEvents', compact('events'));
     }
     public function RefuseAccepEvent($action){
@@ -85,6 +86,7 @@ class EventController extends Controller
                         'isAccept' => '1'
                     ]);
                     session()->flash('success', 'You have successfully reserved a ticket for this event');
+                    
                     return redirect('/EventsDetails/'.$id);
                 }else{
                     $events->placeNumber = $events->placeNumber - 1;
