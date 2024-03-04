@@ -58,6 +58,8 @@ Route::post('/AddNewEvent', [EventController::class, 'AddNewEvent'])->middleware
 Route::get('/GestionEvents', [EventController::class, 'GestionEvents'])->middleware('auth');
 Route::get('/RefuseAccepEvent/{action}', [EventController::class, 'RefuseAccepEvent'])->middleware('auth');
 Route::get('/ReserveTickete/{id}', [EventController::class, 'ReserveTickete'])->middleware('auth');
+Route::get('/MyEventReservation/{id}', [EventController::class, 'MyEventReservation'])->middleware('auth');
+Route::get('/AcceptReservation/{action}', [EventController::class, 'AcceptReservation'])->middleware('auth');
 
 
 
