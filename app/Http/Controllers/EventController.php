@@ -12,6 +12,8 @@ use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMail;
 class EventController extends Controller
 {
     public function index(){
@@ -130,6 +132,12 @@ class EventController extends Controller
                         'event_id' => $id,
                         'isAccept' => '1'
                     ]);
+                    $mailData = [
+                        'title' => 'MailFrom Evento',
+                        'body' => 'Felicitation',
+                        'Code'=>'Felicitation You have successfully reserved a ticket for event : '.$events->title,
+                    ];
+                    Mail::to(auth()->user()->email)->queue(new SendMail($mailData));
                     session()->flash('success', 'You have successfully reserved a ticket for this event');
                     return redirect('/EventsDetails/'.$id);
                 }else{
@@ -160,8 +168,14 @@ class EventController extends Controller
     public function AcceptReservation($action){
         $action = explode('-', $action);
         $ticket = Ticket::find($action[0]);
-        $event = Event::find($ticket->event_id);
+        $event = Event::where('id',$ticket->event_id)->with('user')->first();
         if($action[1] == 'accept'){
+            $mailData = [
+                'title' => 'MailFrom Evento',
+                'body' => 'Felicitation',
+                'Code'=>'Felicitation You have successfully reserved a ticket for event : '.$event->title,
+            ];
+            Mail::to($event->user->email)->queue(new SendMail($mailData));
             $ticket->isAccept = '1';
             $ticket->save();
         }else{
