@@ -2,15 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use App\Models\Permission;
 use App\Models\User;
 use App\Models\Role;
+use App\Models\Ticket;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class UserContreoller extends Controller
 {
     public function index(){
-        return view('admin.index');
+        $statistique = [
+            'users' => User::count(),
+            'categories' => Category::count(),
+            'Ticket' => Ticket::count(),
+            'Event'=> Event::count()
+        ];
+        $lastEvent = Event::with('user')->orderBy('id', 'desc')->take(5)->get();
+        return view('admin.index',compact('statistique', 'lastEvent'));
     }
     public function error(){
         return view('user.eror404');

@@ -51,6 +51,13 @@
                                 <p>Date : {{$event->date}}</p>
                                 <p>Adresse : {{$event->adresse}}</p>
                                 <p>Place Disponible : {{$event->placeNumber}}</p>
+                                <p>Accept Type : 
+                                    @if($event->acceptType == 'auto')
+                                        <span class="badge bg-success">Automatique</span>
+                                    @else
+                                        <span class="badge bg-danger">Pending</span>
+                                    @endif
+                                </p>
                                 <p class="fw-bold text-danger">Price : {{$event->price}}</p>
                             </div>
                         </div>
