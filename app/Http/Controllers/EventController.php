@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Redirect;
 class EventController extends Controller
 {
     public function index(){
-        return view('user.index');
+        $lastEvents = Event::where('isPublish', 'publish')->with('user')->orderBy('id', 'desc')->limit(4)->get();
+        return view('user.index', compact('lastEvents'));
     }
     public function events(){
         $categories = Category::all();

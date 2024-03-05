@@ -10,34 +10,35 @@
 @endsection
 
 @section('content')
-    <section id="home" class="banner banner--overlay" style="background-image: url(assets/images/banner/bg.jpg);">
+    <section id="home" class="banner banner--overlay" style="background-image: url(images/{{$lastEvents[0]->image}});">
         <div class="container">
             <div class="banner__wrapper">
                 <div class="banner__content text-center aos-init aos-animate" data-aos="zoom-in"
                     data-aos-duration="900">
-                    <h1>envato meetup 2023</h1>
-                    <h3>12 Dec In New York</h3>
+                    <h1>{{$lastEvents[0]->title}}</h1>
+                    <h3>{{ date('d M Y', strtotime($lastEvents[0]->date)) }}
+                         In {{$lastEvents[0]->adresse}}</h3>
                     <div class="banner__bottom">
                         <ul class="countdown justify-content-center" data-date="July 25, 2023 21:14:01" id="countdown">
                             <li class="countdown__item">
-                                <h3 class="countdown__number color--theme-color countdown__number-days">0</h3>
+                                <h3 class="countdown__number color--theme-color countdown__number-days">3</h3>
                                 <p class="countdown__text">Days</p>
                             </li>
                             <li class="countdown__item">
-                                <h3 class="countdown__number color--theme-color countdown__number-hours">0</h3>
+                                <h3 class="countdown__number color--theme-color countdown__number-hours">4</h3>
                                 <p class="countdown__text">Hours</p>
                             </li>
                             <li class="countdown__item">
-                                <h3 class="countdown__number color--theme-color countdown__number-minutes">0</h3>
+                                <h3 class="countdown__number color--theme-color countdown__number-minutes">6</h3>
                                 <p class="countdown__text">Min</p>
                             </li>
                             <li class="countdown__item">
-                                <h3 class="countdown__number color--theme-color countdown__number-seconds">0</h3>
+                                <h3 class="countdown__number color--theme-color countdown__number-seconds">1</h3>
                                 <p class="countdown__text">Sec</p>
                             </li>
                         </ul>
                     </div>
-                    <a href="https://thetork.com/demos/html/uevent/index-single.html#"
+                    <a href="EventsDetails/{{$lastEvents[0]->id}}"
                         class="default-btn move-right"><span>Get Ticket <svg class="svg-inline--fa fa-arrow-right"
                                 aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right"
                                 role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
@@ -50,6 +51,7 @@
             </div>
         </div>
     </section>
+    @if(auth()->user() == null)
     <div class="register register--uplifted aos-init aos-animate" data-aos="fade-up" data-aos-duration="900"
         id="register">
         <div class="container">
@@ -81,6 +83,7 @@
             </div>
         </div>
     </div>
+    @endif
     <section class="about padding-top padding-bottom">
         <div class="container">
             <div class="about__wrapper">
@@ -246,7 +249,7 @@
                                 reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
                             </p>
                             <a href="https://thetork.com/demos/html/uevent/index-single.html#"
-                                class="default-btn move-right"><span>Get Ticket <svg
+                                class="default-btn move-right"><span>Download App<svg
                                         class="svg-inline--fa fa-arrow-right" aria-hidden="true" focusable="false"
                                         data-prefix="fas" data-icon="arrow-right" role="img"
                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
@@ -268,38 +271,59 @@
             </div>
             <div class="schedule__wrapper">
                 <div class="row g-5">
-                    <div class="col-lg-6">
-                        <div class="schedule__item aos-init" data-aos="fade-up-left" data-aos-duration="1000">
-                            <div class="schedule__item-inner">
-                                <div class="schedule__item-time">
-                                    <h6>10am - 12pm</h6>
-                                </div>
-                                <div class="schedule__item-content">
-                                    <h4>Consectetur Adipisicing elit Eiusmod</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat perferendis
-                                        officiis quae eius delectus, aliquid deserunt, repudiandae consectetur corporis,
-                                        molestiae ipsam. Aut dolore iure excepturi!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 offset-lg-6">
-                        <div class="schedule__item schedule__item--right aos-init" data-aos="fade-up-right"
-                            data-aos-duration="1000">
-                            <div class="schedule__item-inner">
-                                <div class="schedule__item-time">
-                                    <h6>12pm - 2pm</h6>
-                                </div>
-                                <div class="schedule__item-content">
-                                    <h4>Consectetur Adipisicing elit Eiusmod</h4>
-                                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat perferendis
-                                        officiis quae eius delectus, aliquid deserunt, repudiandae consectetur corporis,
-                                        molestiae ipsam. Aut dolore iure excepturi!</p>
+                    @php $i=1; @endphp
+                    @foreach($lastEvents as $event)
+                    @php $i++; @endphp
+                    @if($i%2==0)
+                        <div class="col-lg-6">
+                            <div class="schedule__item aos-init" data-aos="fade-up-left" data-aos-duration="1000">
+                                <div class="schedule__item-inner">
+                                    <div class="schedule__item-time">
+                                        <h6>{{ date('d M Y', strtotime($event->date)) }}</h6>
+                                    </div>
+                                    <div class="schedule__item-content">
+                                        <h4>{{ $event->title}}</h4>
+                                        <p style="height: 160px; overflow: hidden">{{ $event->description}}</p>
+                                        <a href="EventsDetails/{{$event->id}}"
+                                            class="default-btn move-right"><span>Get Ticket <svg class="svg-inline--fa fa-arrow-right"
+                                                    aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right"
+                                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                                                    <path fill="currentColor"
+                                                        d="M438.6 278.6l-160 160C272.4 444.9 264.2 448 256 448s-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L338.8 288H32C14.33 288 .0016 273.7 .0016 256S14.33 224 32 224h306.8l-105.4-105.4c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160C451.1 245.9 451.1 266.1 438.6 278.6z">
+                                                    </path>
+                                            </svg><!-- <i class="fa-solid fa-arrow-right"></i> Font Awesome fontawesome.com --></span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
+                    @else
+                        <div class="col-lg-6 offset-lg-6">
+                            <div class="schedule__item schedule__item--right aos-init" data-aos="fade-up-right"
+                                data-aos-duration="1000">
+                                <div class="schedule__item-inner">
+                                    <div class="schedule__item-time">
+                                        <h6>{{ date('d M Y', strtotime($event->date)) }}</h6>
+                                    </div>
+                                    <div class="schedule__item-content">
+                                        <h4>{{ $event->title}}</h4>
+                                        <p style="height: 160px; overflow: hidden">{{ $event->description}}</p>
+                                        <a href="EventsDetails/{{$event->id}}"
+                                            class="default-btn move-right"><span>Get Ticket <svg class="svg-inline--fa fa-arrow-right"
+                                                    aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right"
+                                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" data-fa-i2svg="">
+                                                    <path fill="currentColor"
+                                                        d="M438.6 278.6l-160 160C272.4 444.9 264.2 448 256 448s-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L338.8 288H32C14.33 288 .0016 273.7 .0016 256S14.33 224 32 224h306.8l-105.4-105.4c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160C451.1 245.9 451.1 266.1 438.6 278.6z">
+                                                    </path>
+                                            </svg><!-- <i class="fa-solid fa-arrow-right"></i> Font Awesome fontawesome.com --></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    @endforeach
+                    {{-- <div class="col-lg-6">
                         <div class="schedule__item aos-init" data-aos="fade-up-left" data-aos-duration="1000">
                             <div class="schedule__item-inner">
                                 <div class="schedule__item-time">
@@ -329,7 +353,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

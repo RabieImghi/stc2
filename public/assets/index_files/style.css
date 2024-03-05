@@ -1041,6 +1041,9 @@ ol {
 .header-section {
   z-index: 999;
   position: absolute;
+  background-color: white;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 .header-section.header-fixed {
   position: fixed;
@@ -1437,7 +1440,7 @@ ol {
   top: 0;
   left: 0;
   background-image: linear-gradient(135deg, #32C2FA 58%, #fb4c6e);
-  opacity: 0.85;
+  opacity: 0.70;
 }
 @media (min-width: 768px) {
   .banner {
