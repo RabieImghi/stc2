@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserContreoller;
 use Illuminate\Support\Facades\Route;
 
@@ -62,7 +63,12 @@ Route::get('/MyEventReservation/{id}', [EventController::class, 'MyEventReservat
 Route::get('/AcceptReservation/{action}', [EventController::class, 'AcceptReservation'])->middleware('auth');
 
 Route::get('/Payment/{action}/{id}', [EventController::class, 'Reservation'])->middleware('auth');
+Route::get('/Reservation', [EventController::class, 'myOrder'])->middleware('auth');
+Route::get('/ticketDetail/{id}', [EventController::class, 'ticketDetail'])->middleware('auth');
+Route::get('/download/{id}', [EventController::class, 'download'])->middleware('auth');
 
+Route::get('/searchEvent/{value}', [TicketController::class, 'searchEvent']);
+Route::get('/searchEvent/category/{id}', [TicketController::class, 'searchEventcategory']);
 
 
 

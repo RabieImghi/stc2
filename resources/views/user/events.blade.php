@@ -27,19 +27,22 @@
     <section class="team  pt-4 mt-4 padding-bottom" id="team" style="background-image:url(assets/images/team/bg.png)">
         <div class="container">
             <div class="filter d-flex gap-4 pb-4">
-                <select name="" class="form-control w-25" id="">
-                    <option value="1" selected disabled>Filter By</option>
-                    <option value="1">hhhhhh</option>
+                <select name="" class="form-control w-25" id="categoryFilter">
+                    <option selected disabled>Filter By</option>
+                    <option value="all">All</option>
+                    @foreach($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
                 </select>
                 <div class="w-100 d-flex">
-                    <input type="search" class="form-control" placeholder="Search">
+                    <input type="search" id="search" class="form-control" placeholder="Search">
                     <button type="button" class="btn btn-dark" style="border-radius: 0%" data-mdb-ripple-init>
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
             </div>
             <div class="team__wrapper">
-                <div class="row g-4">
+                <div class="row g-4" id="allEvent">
                     @foreach($events as $event)
                     <div class="col-lg-6">
                         <div class="team__item aos-init aos-animate" data-aos="fade-left" data-aos-duration="900">
@@ -72,6 +75,38 @@
                 </div> --}}
             </div>
         </div>
+        <script>
+            const search = document.getElementById('search');
+            const categoryFilter = document.getElementById('categoryFilter');
+            search.addEventListener('input', () => {
+                const xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById('allEvent').innerHTML = this.responseText;
+                    }
+                };
+                if(search.value == ''){
+                    xhttp.open("GET", "/searchEvent/allEvent", true);
+                }else{
+                    xhttp.open("GET", "/searchEvent/" + search.value, true);
+                }
+                xhttp.send();
+            });
+            categoryFilter.addEventListener('change', () => {
+                const xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById('allEvent').innerHTML = this.responseText;
+                    }
+                };
+                if(categoryFilter.value == "all"){
+                    xhttp.open("GET", "/searchEvent/allEvent", true);
+                }else{
+                    xhttp.open("GET", "/searchEvent/category/" + categoryFilter.value, true);
+                }
+                xhttp.send();
+            });
+        </script>
     </section>
 @endsection
 

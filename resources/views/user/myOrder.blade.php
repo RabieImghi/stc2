@@ -13,12 +13,12 @@
 <section class="page-header bg--cover" style="background-image: url(assets/images/header/bg.jpg);">
     <div class="container">
         <div class="page-header__content text-center">
-            <h2 class="text-uppercase">All Our Events</h2>
+            <h2 class="text-uppercase">All My Ticket</h2>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="https://thetork.com/demos/html/uevent/index.html">Home</a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Events</li>
+                    <li class="breadcrumb-item active" aria-current="page">Reservation</li>
                 </ol>
             </nav>
         </div>
@@ -29,24 +29,20 @@
         <table class="tabel me-4" style="width: 98.3%">
             <thead class="">
                 <tr>
-                    <th class="p-4">User Name</th>
                     <th class="p-4">Event Name</th>
+                    <th class="p-4">Date Event</th>
                     <th class="p-4">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($events as $event)
+                @foreach($tickets as $ticket)
                 <tr>
-                    <td class="p-4">{{$event->user->name}}</td>
-                    <td class="p-4">{{$event->event->title}}</td>
+                    <td class="p-4">{{$ticket->event->title}}</td>
+                    <td class="p-4">{{$ticket->event->date}}</td>
                     <td class="p-4 d-flex
                         justify-content-center">
-                        @php 
-                        $accept = $event->id."-accept";
-                        $refuse = $event->id."-refuse";	
-                        @endphp
-                        <a href="/AcceptReservation/{{$accept}}" class="btn addPermission accept">Accept</a>
-                        <a href="/AcceptReservation/{{$refuse}}" class="mx-3 btn addPermission">Refuse</a>
+                        <a href="/ticketDetail/{{$ticket->id}}" target='_blank' class="btn addPermission accept">View Ticket</a>
+                        <a href="/download/{{$ticket->id}}" class="mx-3 btn addPermission">Download Ticket</a>
                     </td>
                 </tr>
                 @endforeach

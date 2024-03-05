@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Event;
 use App\Models\Ticket;
 use Dompdf\Dompdf;
+use Spatie\Browsershot\Browsershot;
 use Stripe\Stripe;
 use Stripe\Checkout\Session;
 use Illuminate\Support\Facades\Response;
@@ -17,8 +18,9 @@ class EventController extends Controller
         return view('user.index');
     }
     public function events(){
+        $categories = Category::all();
         $events = Event::where('isPublish', 'publish')->with('user')->paginate(6);
-        return view('user.events', compact('events'));
+        return view('user.events', compact('events', 'categories'));
     }
     public function eventsDetail($id){
         $event = Event::where('id', $id)->with('user')->with('category')->first();
@@ -65,7 +67,7 @@ class EventController extends Controller
     }
     public static function downloadTicket($id){
         $dompdf = new Dompdf();
-        $event = Event::findOrFail($id);
+        $event = Ticket::where('id',$id)->with('event')->with('user')->first();
         $html = view('ticket', ['event' => $event])->render();
         $dompdf->loadHtml($html);
         $dompdf->render();
@@ -119,33 +121,29 @@ class EventController extends Controller
         if($action=="success"){
             $events = Event::find($id);
             if($events->placeNumber > 0){
-                if(Ticket::where('user_id', auth()->user()->id)->where('event_id',$id)->count() == 0){
-                    if($events->acceptType == 'auto'){
-                        $events->placeNumber = $events->placeNumber - 1;
-                        $events->save();
-                        Ticket::create([
-                            'user_id' => auth()->user()->id,
-                            'event_id' => $id,
-                            'isAccept' => '1'
-                        ]);
-                        session()->flash('success', 'You have successfully reserved a ticket for this event');
-                        return redirect('/EventsDetails/'.$id);
-                    }else{
-                        $events->placeNumber = $events->placeNumber - 1;
-                        $events->save();
-                        Ticket::create([
-                            'user_id' => auth()->user()->id,
-                            'event_id' => $id,
-                            'isAccept' => '0'
-                        ]);
-                        
-                        session()->flash('success', 'Your request has been sent to the event owner');
-                        return redirect('/EventsDetails/'.$id);
-                    }
+                if($events->acceptType == 'auto'){
+                    $events->placeNumber = $events->placeNumber - 1;
+                    $events->save();
+                     Ticket::create([
+                        'user_id' => auth()->user()->id,
+                        'event_id' => $id,
+                        'isAccept' => '1'
+                    ]);
+                    session()->flash('success', 'You have successfully reserved a ticket for this event');
+                    return redirect('/EventsDetails/'.$id);
                 }else{
-                    session()->flash('error', 'You have already reserved a ticket for this event');
+                    $events->placeNumber = $events->placeNumber - 1;
+                    $events->save();
+                    Ticket::create([
+                        'user_id' => auth()->user()->id,
+                        'event_id' => $id,
+                        'isAccept' => '0'
+                    ]);
+                    
+                    session()->flash('success', 'Your request has been sent to the event owner');
                     return redirect('/EventsDetails/'.$id);
                 }
+                
             }else{
                 session()->flash('error', 'You have already reserved a ticket for this event');
                 return redirect('/EventsDetails/'.$id);
@@ -171,6 +169,17 @@ class EventController extends Controller
             $ticket->delete();
         }
         return redirect('/MyEventReservation/'.auth()->user()->id);
+    }
+    public function myOrder(){
+        $tickets = Ticket::where('user_id', auth()->user()->id)->with('event')->with('user')->get();
+        return view('user.myOrder',compact('tickets'));
+    }
+    public function ticketDetail($id){
+        $ticket = Ticket::where('id',$id)->with('event')->first();
+        return view('user.ticketDetail',compact('ticket'));
+    }
+    public function download($id){
+        return EventController::downloadTicket($id);
     }
 
 }
