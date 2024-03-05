@@ -70,5 +70,9 @@ Route::get('/download/{id}', [EventController::class, 'download'])->middleware('
 Route::get('/searchEvent/{value}', [TicketController::class, 'searchEvent']);
 Route::get('/searchEvent/category/{id}', [TicketController::class, 'searchEventcategory']);
 
+Route::get('/DisplayMyEvent', [TicketController::class, 'DisplayMyEvent']);
+Route::get('/updateMyEvent/{id}', [TicketController::class, 'updateMyEvent']);
+Route::get('/deletMyEvent/{id}', [TicketController::class, 'deletMyEvent']);
+Route::post('/updateMyEvent', [TicketController::class, 'updateEvent']);
 
 
