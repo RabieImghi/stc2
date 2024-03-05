@@ -61,6 +61,8 @@ Route::get('/ReserveTickete/{id}', [EventController::class, 'ReserveTickete'])->
 Route::get('/MyEventReservation/{id}', [EventController::class, 'MyEventReservation'])->middleware('auth');
 Route::get('/AcceptReservation/{action}', [EventController::class, 'AcceptReservation'])->middleware('auth');
 
+Route::get('/Payment/{action}/{id}', [EventController::class, 'Reservation'])->middleware('auth');
+
 
 
 

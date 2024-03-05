@@ -1,112 +1,100 @@
 @extends('user.layout')
-@section('title', 'Events')
+@section('title', 'Event Detail')
 @section('linksStyle')
-    <link rel="stylesheet" href="./assets/events_files/bootstrap.min.css">
-    <link rel="stylesheet" href="./assets/events_files/aos.css">
-    <link rel="stylesheet" href="./assets/events_files/all.min.css">
-    <link rel="stylesheet" href="./assets/events_files/lightcase.css">
-    <link rel="stylesheet" href="./assets/events_files/swiper-bundle.min.css">
-    <link rel="stylesheet" href="./assets/events_files/style.css">
+    <link rel="stylesheet" href="{{asset('./assets/eventsDetails_files/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('./assets/eventsDetails_files/aos.css')}}">
+    <link rel="stylesheet" href="{{asset('./assets/eventsDetails_files/all.min.css')}}">
+    <link rel="stylesheet" href="{{asset('./assets/eventsDetails_files/lightcase.css')}}">
+    <link rel="stylesheet" href="{{asset('./assets/eventsDetails_files/swiper-bundle.min.css')}}">
+    <link rel="stylesheet" href="{{asset('./assets/eventsDetails_files/style.css')}}">
 @endsection
 
 @section('content')
-    <section class="page-header bg--cover" style="background-image: url(assets/images/header/bg.jpg);">
-        <div class="container">
-            <div class="page-header__content text-center">
-                <h2 class="text-uppercase">Add Your Events</h2>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb justify-content-center mb-0">
-                        <li class="breadcrumb-item"><a href="https://thetork.com/demos/html/uevent/index.html">Home</a>
-                        </li>
-                        <li class="breadcrumb-item active" aria-current="page">Add Events</li>
-                    </ol>
-                </nav>
-            </div>
+<section class="page-header bg--cover" style="background-image: url(assets/images/header/bg.jpg);">
+    <div class="container">
+        <div class="page-header__content text-center">
+            <h2 class="text-uppercase">All Our Events</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="https://thetork.com/demos/html/uevent/index.html">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">Events</li>
+                </ol>
+            </nav>
         </div>
-    </section>
-    
-    <section class="team  pt-4 mt-4 padding-bottom" id="team" style="background-image:url(assets/images/team/bg.png)">
-        <div class="container">
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-            <form action="/AddNewEvent" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="w-100 mt-3 mb-3">
-                    <label class="h5" >Title</label>
-                    <input required type="text" name="title" class="form-control mt-2" placeholder="Title">
-                </div>
-                <div class="w-100 mt-3 mb-3">
-                    <label class="h5" >Description</label>
-                    <textarea required name="description" class="form-control mt-2" cols="30" rows="10" placeholder="Description"></textarea>
-                </div>
-                <div class="w-100 mt-3 mb-3">
-                    <label class="h5" >Date</label>
-                    <input required name="date" type="datetime-local" class="form-control mt-2">
-                </div>
-                <div class="w-100 mt-3 mb-3">
-                    <label class="h5" >Adresse</label>
-                    <input required type="text" name="adresse" class="form-control mt-2" placeholder="Adresse / Place">
-                </div>
-                <div class="w-100 mt-3 mb-3">
-                    <label class="h5" >Number Of Place</label>
-                    <input required type="number" name="placeNumber" class="form-control mt-2" placeholder="0">
-                </div>
-                <div class="w-100 mt-3 mb-3">
-                    <label class="h5" >Price</label>
-                    <input required type="number" name="price" class="form-control mt-2" placeholder="0">
-                </div>
-                <div class="w-100 mt-3 mb-3">
-                    <label class="h5" >Accept Type</label>
-                    <select required name="acceptType" class="form-control" id="">
-                        <option value="auto">Automatique</option>
-                        <option value="man">Manuell</option>
-                    </select>
-                </div>
-                <div class="w-100 mt-3 mb-3">
-                    <label class="h5" >Cetegory</label>
-                    <select required name="category_id" class="form-control" id="">
-                        @foreach($categories as $categorie)
-                            <option value="{{$categorie->id}}">{{$categorie->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="w-100 mt-3 mb-3">
-                    <label class="h5">Image</label>
-                    <input required type="file" class="form-control mt-2" name="image" accept="jpeg,png,jpg,gif,svg">
-                </div>
-                <div class="w-100 mt-3 mb-3 text-end">
-                    <button class="default-btn move-right border-0">
-                        <span>Add New Event
-                        </span>
-                    </button>
-                </div>
-            </form> 
-           
-        </div>
-    </section>
+    </div>
+</section>
+<section class="team  pt-4 mt-4 padding-bottom" id="team" style="background-image:url(assets/images/team/bg.png)">
+    <div class="container">
+        <table class="tabel me-4" style="width: 98.3%">
+            <thead class="">
+                <tr>
+                    <th class="p-4">User Name</th>
+                    <th class="p-4">Event Name</th>
+                    <th class="p-4">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($events as $event)
+                <tr>
+                    <td class="p-4">{{$event->user->name}}</td>
+                    <td class="p-4">{{$event->event->title}}</td>
+                    <td class="p-4 d-flex
+                        justify-content-center">
+                        @php 
+                        $accept = $event->id."-accept";
+                        $refuse = $event->id."-refuse";	
+                        @endphp
+                        <a href="/AcceptReservation/{{$accept}}" class="btn addPermission accept">Accept</a>
+                        <a href="/AcceptReservation/{{$refuse}}" class="mx-3 btn addPermission">Refuse</a>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>  
+    </div>
+</section>
 @endsection
 
 @section('liknsJs')
-    <script src="./assets/events_files/jquery-3.6.0.min.js.téléchargé"></script>
-    <script src="./assets/events_files/bootstrap.bundle.min.js.téléchargé"></script>
-    <script src="./assets/events_files/all.min.js.téléchargé"></script>
-    <script src="./assets/events_files/swiper-bundle.min.js.téléchargé"></script>
-    <script src="./assets/events_files/aos.js.téléchargé"></script>
-    <script src="./assets/events_files/lightcase.js.téléchargé"></script>
-    <script src="./assets/events_files/purecounter_vanilla.js.téléchargé"></script>
-    <script src="./assets/events_files/countdown.min.js.téléchargé"></script>
-    <script src="./assets/events_files/custom.js.téléchargé"></script>
+    <script src="{{asset('./assets/eventsDetails_files/jquery-3.6.0.min.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/bootstrap.bundle.min.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/all.min.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/swiper-bundle.min.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/aos.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/lightcase.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/purecounter_vanilla.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/countdown.min.js.téléchargé')}}"></script>
+    <script src="{{asset('./assets/eventsDetails_files/custom.js.téléchargé')}}"></script>
 @endsection
 
 @section('style')
     <style type="text/css">
+        table {
+            border-collapse: separate;
+            border-spacing: 0 20px;
+        }
+        
+        .addPermission{
+            background-color: #fb4c6e;
+            color: white;
+        }
+        .accept{
+            background-color: #4caf50;
+            color: white;
+        }
+        table tr {
+            box-shadow: 2px 3px 10px rgba(211, 211, 211, 0.635);
+            border-radius: 3px;
+            padding: 20px;
+        }
+        table tr:hover {
+            cursor: pointer;
+            background-color: #fbadbd1d;
+        }
+        table td, table th {
+            padding: 10px 0;
+        }
         :host,
         :root {
             --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Solid";

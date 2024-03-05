@@ -51,6 +51,7 @@
                                 <p>Date : {{$event->date}}</p>
                                 <p>Adresse : {{$event->adresse}}</p>
                                 <p>Place Disponible : {{$event->placeNumber}}</p>
+                                <p class="fw-bold text-danger">Price : {{$event->price}}</p>
                             </div>
                         </div>
                     </div>

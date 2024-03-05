@@ -60,7 +60,7 @@
                             @endif
                             
                             <li>
-                                <a href="#">Pricing</a>
+                                <a href="Reservation">Reservation</a>
 
                             </li>
                             <li>
