@@ -8,6 +8,7 @@ use App\Models\Category;
 
 class TicketController extends Controller
 {
+    
     public function searchEvent($value){
         if($value == "allEvent"){
             $events = Event::where('isPublish', 'publish')->with('user')->paginate(6);
