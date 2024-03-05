@@ -50,6 +50,7 @@
                                     <ul class="submenu">
                                         <li><a href="/Events">All Event</a></li>
                                         <li><a href="/AddEvent">Add Event</a></li>
+                                        <li><a href="/DisplayMyEvent">My Events</a></li>
                                         <li><a href="/MyEventReservation/{{ Auth::user()->id }}">Accepte Reservation</a></li>
                                     </ul>
                                 </li>
