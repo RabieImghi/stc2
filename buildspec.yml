@@ -15,8 +15,12 @@ phases:
     commands:
       - composer update
       - npm install
-      - sudo service mysql status
-      - sudo service mysql start
+      - npm run production
+  build:
+    commands:
+      - cp .env.example .env
+      - php artisan key:generate
+      - php artisan config:cache
       - php artisan migrate
 artifacts:
   files:
