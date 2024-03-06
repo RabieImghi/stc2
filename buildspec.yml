@@ -13,10 +13,9 @@ phases:
       - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
   pre_build:
     commands:
+      - copmoser install
       - composer update
       - npm install
-  build:
-    commands:
       - cp .env.example .env
       - php artisan key:generate
       - php artisan config:cache
