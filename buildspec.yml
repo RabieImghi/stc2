@@ -15,8 +15,8 @@ phases:
     commands:
       - composer update
       - npm install
-      - sudo systemctl status mysql
-      - sudo systemctl start mysql
+      - sudo service mysql status
+      - sudo service mysql start
       - php artisan migrate
 artifacts:
   files:
