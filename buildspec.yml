@@ -15,7 +15,6 @@ phases:
     commands:
       - composer update
       - npm install
-      - npm run production
   build:
     commands:
       - cp .env.example .env
