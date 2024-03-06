@@ -6,7 +6,7 @@ phases:
       php: 8.1
     commands:
       - apt-get update -y
-      - sudo apt-get install php-mysql
+      - sudo apt-get install php-mysql --yes
       - sudo service apache2 restart
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
       - apt-get install -y libpq-dev libzip-dev
