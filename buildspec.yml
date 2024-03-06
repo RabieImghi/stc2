@@ -5,9 +5,6 @@ phases:
     runtime-versions:
       php: 8.1
     commands:
-      - sudo apt update
-      - sudo apt install php8.2
-      - sudo apt install php8.2-cli
       - apt-get update -y
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
       - apt-get install -y libpq-dev libzip-dev
@@ -16,7 +13,6 @@ phases:
       - php composer-setup.php --install-dir=/usr/local/bin --filename=composer
   pre_build:
     commands:
-      - composer install
       - composer update
       - npm install
       - cp .env.example .env
