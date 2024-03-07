@@ -6,8 +6,6 @@ phases:
       php: 8.1
     commands:
       - apt-get update -y
-      - sudo apt-get install apache2 -y
-      - sudo apt-get install php-mysql --yes
       - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
       - apt-get install -y libpq-dev libzip-dev
       - apt-get install -y php-pgsql
@@ -16,13 +14,6 @@ phases:
   pre_build:
     commands:
       - composer update
-      - npm install
-      - cp .env.example .env
-      - php artisan key:generate
-      - php artisan config:cache
-      - ls -al
-      - php -m | grep PDO
-      - php artisan migrate
 artifacts:
   files:
     - '**/*'
