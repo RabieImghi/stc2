@@ -69,6 +69,7 @@
                     </div>
                     @endforeach
                 </div>
+                {{$events->links()}}
                 {{-- <div class="text-center mt-5">
                     <a href="events.html"
                         class="default-btn move-right"><span>More Event</span></a>

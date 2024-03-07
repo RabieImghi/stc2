@@ -59,6 +59,7 @@
         @endforeach
     </tbody>
 </table>
+{{$users->links()}}
 <div class="addModalBack"></div>
 <div class="addModal p-4">
     <div class="fw-bold h5">

@@ -26,18 +26,18 @@ class UserContreoller extends Controller
         return view('user.eror404');
     }
     public function permissionUser(){
-        $users = User::with('permissions')->with('roles')->get();
+        $users = User::with('permissions')->with('roles')->paginate(2);
         $permissions = Permission::all();
         return view('admin.permissionUser', compact('users', 'permissions'));
     }
     public function PermissionRole(){
-        $roles = Role::with('permissions')->get();
+        $roles = Role::with('permissions')->paginate(2);
         $permissions = Permission::all();
         return view('admin.permissionRole', compact('roles', 'permissions'));
     }
     public function GestionUsers(){
         $roles = Role::all();
-        $users = User::with('roles')->get();
+        $users = User::with('roles')->paginate(3);
         return view('admin.GestionUsers', compact('users','roles'));
     }
     public function deleteUser(Request $request){

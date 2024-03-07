@@ -22,8 +22,14 @@ class TicketController extends Controller
         return view('user.eventsSerch', compact('events'));
     }
     public function DisplayMyEvent(){
-        $events = Event::where('user_id', auth()->user()->id)->with('user')->paginate(6);
-        return view('user.DisplayMyEvents', compact('events'));
+        $events = Event::where('user_id', auth()->user()->id)->with('user')->paginate(5);
+        $statistique = [
+            'events' => Event::where('user_id', auth()->user()->id)->count(),
+            'eventsAccepted' => Event::where('user_id', auth()->user()->id)->where('isPublish', 'publish')->count(),
+            'eventsNoneAccepted' => Event::where('user_id', auth()->user()->id)->where('isPublish', 'NonPublish')->count(),
+            'tickets' => Event::where('user_id', auth()->user()->id)->with('tickets')->get()->pluck('tickets')->flatten()->count(),
+        ];
+        return view('user.DisplayMyEvents', compact('events', 'statistique'));
     }
     public function updateMyEvent($id)
     {

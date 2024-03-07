@@ -22,7 +22,7 @@ class EventController extends Controller
     }
     public function events(){
         $categories = Category::all();
-        $events = Event::where('isPublish', 'publish')->with('user')->paginate(6);
+        $events = Event::where('isPublish', 'publish')->with('user')->paginate(5);
         return view('user.events', compact('events', 'categories'));
     }
     public function eventsDetail($id){
@@ -65,7 +65,7 @@ class EventController extends Controller
         return redirect('/Events');
     }
     public function GestionEvents(){
-        $events = Event::where('isPublish','NonPublish')->with('category')->with('user')->get();
+        $events = Event::where('isPublish','NonPublish')->with('category')->with('user')->paginate(4);
         return view('admin.gestionEvents', compact('events'));
     }
     public static function downloadTicket($id){
@@ -116,6 +116,8 @@ class EventController extends Controller
                 'mode' => 'payment',
                 'success_url' => 'http://35.172.160.168/Payment/success/'.$id,
                 'cancel_url' => 'http://35.172.160.168/Payment/error/'.$id,
+                // 'success_url' => 'http://127.0.0.1:8000/Payment/success/'.$id,
+                // 'cancel_url' => 'http://127.0.0.1:8000/Payment/error/'.$id,
             ]);
             return Redirect::away($checkout_session->url);
         }else{
