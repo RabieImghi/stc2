@@ -41,8 +41,12 @@
                     <td class="p-4">{{$ticket->event->date}}</td>
                     <td class="p-4 d-flex
                         justify-content-center">
+                        @if($ticket->isAccept == 1)
                         <a href="/ticketDetail/{{$ticket->id}}" target='_blank' class="btn addPermission accept">View Ticket</a>
                         <a href="/download/{{$ticket->id}}" class="mx-3 btn addPermission">Download Ticket</a>
+                        @else
+                        <span class="text-danger">Your Request is pending !! </span>
+                        @endif
                     </td>
                 </tr>
                 @endforeach
