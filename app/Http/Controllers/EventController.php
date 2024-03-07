@@ -118,7 +118,10 @@ class EventController extends Controller
                 'cancel_url' => 'http://35.172.160.168/Payment/error/'.$id,
             ]);
             return Redirect::away($checkout_session->url);
-        }else return redirect('/EventsDetails/'.$id);
+        }else{
+            session()->flash('error', 'You have already reserved a ticket for this event');
+            return redirect('/EventsDetails/'.$id);
+        } 
     }
     public function Reservation($action,$id){
         if($action=="success"){

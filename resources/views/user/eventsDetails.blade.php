@@ -90,17 +90,30 @@
             </div>
         </div>
     </section>
-    {{-- @if(session('error'))
+    @if(session('error'))
         <script>
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
                 text: "{{session('error')}}!",
             });
-            sessionStorage.clear();
-            localStorage.clear();
         </script>
-    @endif --}}
+        @php 
+            session()->forget('error');
+        @endphp
+    @endif
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: "success",
+                title: "Oops...",
+                text: "{{session('success')}}!",
+            });
+        </script>
+        @php 
+            session()->forget('error');
+        @endphp
+    @endif
     
 @endsection
 
