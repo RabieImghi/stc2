@@ -56,6 +56,11 @@ class UserContreoller extends Controller
         ]);
         $userId = $request->user_idd;
         $user = User::find($userId);
+        $user->permissions()->detach();
+        $permssionId = Role::where('id',$request->role_id)->with('permissions')->first()->permissions->pluck('id')->toArray();
+        foreach($permssionId as $id){
+            $user->permissions()->attach($id);
+        }
         $user->roles()->sync($request->role_id);
         return redirect('/GestionUsers');
     }
