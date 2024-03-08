@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use App\Models\Ticket;
 use App\Models\Category;
+use Stripe\Stripe;
+use Stripe\Checkout\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class TicketController extends Controller
 {
@@ -81,5 +85,26 @@ class TicketController extends Controller
         }
         $event->delete();
         return redirect('/DisplayMyEvent');
+    }
+    public function payeTicket($id,$price){
+        Stripe::setApiKey('sk_test_51OgSVgE3Uo0XLWPtmjKABCTBt1OLGUKhViAW2WgEIEuYffBIpumE78nGP0kk1wDiDMJUckfL7PMRpTycyl7DYM9f00nhKSBVZE');
+        $checkout_session = Session::create([
+            'line_items' => [[
+                'price_data' => [
+                'currency' => 'usd',
+                'product_data' => [
+                    'name' => 'T-shirt',
+                ],
+                'unit_amount' => $price,
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => 'http://35.172.160.168/Payment/successTicket/'.$id,
+            'cancel_url' => 'http://35.172.160.168/Payment/error/'.$id,
+            // 'success_url' => 'http://127.0.0.1:8000/Payment/successTicket/'.$id,
+            // 'cancel_url' => 'http://127.0.0.1:8000/Payment/error/'.$id,
+        ]);
+        return Redirect::away($checkout_session->url);
     }
 }

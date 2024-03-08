@@ -76,3 +76,6 @@ Route::get('/deletMyEvent/{id}', [TicketController::class, 'deletMyEvent']);
 Route::post('/updateMyEvent', [TicketController::class, 'updateEvent']);
 
 
+Route::get('/payeTicket/{id}/{price}', [TicketController::class, 'payeTicket']);
+
+
