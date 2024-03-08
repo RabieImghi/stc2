@@ -64,4 +64,14 @@ class UserContreoller extends Controller
         $user->roles()->sync($request->role_id);
         return redirect('/GestionUsers');
     }
+    public function BaneUser($id){
+        $user = User::find($id);
+        if($user->isBane == 'baned'){
+            $user->isBane = 'nonBaned';
+        }else{
+            $user->isBane = 'baned';
+        }
+        $user->save();
+        return redirect('/GestionUsers');
+    }
 }

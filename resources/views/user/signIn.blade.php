@@ -58,7 +58,20 @@
             </div>
         </div>
     </div>
+    @if(session('baned'))
+        <script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "{{session('baned')}}!",
+            });
+        </script>
+        @php 
+            session()->forget('baned');
+        @endphp
+    @endif
 @endsection
+
 
 @section('liknsJs')
     <script src="./assets/signIn_files/jquery-3.6.0.min.js.téléchargé"></script>

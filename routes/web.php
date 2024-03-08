@@ -77,5 +77,6 @@ Route::post('/updateMyEvent', [TicketController::class, 'updateEvent']);
 
 
 Route::get('/payeTicket/{id}/{price}', [TicketController::class, 'payeTicket']);
+Route::get('/BaneUser/{id}', [UserContreoller::class, 'BaneUser']);
 
 
