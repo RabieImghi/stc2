@@ -22,7 +22,7 @@ class EventController extends Controller
     }
     public function events(){
         $categories = Category::all();
-        $events = Event::where('isPublish', 'publish')->with('user')->paginate(5);
+        $events = Event::where('isPublish', 'publish')->with('user')->orderBy('id', 'desc')->paginate(5);
         return view('user.events', compact('events', 'categories'));
     }
     public function eventsDetail($id){
