@@ -51,7 +51,7 @@ class TicketController extends Controller
             'price'=> 'required',
             'acceptType'=> 'required|in:auto,man',
             'category_id' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
         $event = Event::find($request->id);
         $event->title = $request->title;

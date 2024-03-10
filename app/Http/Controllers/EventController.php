@@ -44,7 +44,7 @@ class EventController extends Controller
             'price'=> 'required',
             'acceptType'=> 'required|in:auto,man',
             'category_id' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
         if($request->date < date('Y-m-d')){
             session()->flash('error', 'The date must be greater than the current date');
