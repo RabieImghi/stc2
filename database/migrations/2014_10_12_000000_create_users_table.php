@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email', 191)->unique();
             $table->string('password');
+            $table->enum('isBane', ['baned', 'nonBaned'])->default('nonBaned');
             $table->engine = 'InnoDB';
             $table->timestamps();
         });

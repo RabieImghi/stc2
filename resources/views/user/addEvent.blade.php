@@ -91,6 +91,18 @@
            
         </div>
     </section>
+    @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "{{session('error')}}!",
+            });
+        </script>
+        @php 
+            session()->forget('error');
+        @endphp
+    @endif
 @endsection
 
 @section('liknsJs')

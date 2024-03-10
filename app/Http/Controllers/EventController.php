@@ -46,7 +46,10 @@ class EventController extends Controller
             'category_id' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        
+        if($request->date < date('Y-m-d')){
+            session()->flash('error', 'The date must be greater than the current date');
+            return redirect('/AddEvent');
+        }
         $imageName = time().'.'.$request->image->extension();  
         $request->image->move(public_path('images'), $imageName);
         $event = new Event();
@@ -100,6 +103,10 @@ class EventController extends Controller
     public function ReserveTickete($id){
         $events = Event::find($id);
         $price = $events->price*100;
+        if($events->date < date('Y-m-d')){
+            session()->flash('error', 'The date of the event has already passed');
+            return redirect('/EventsDetails/'.$id);
+        }
         if($events->placeNumber > 0){
             if($events->acceptType=='auto'){
                     if(Ticket::where('user_id', auth()->user()->id)->where('event_id',$id)->count() == 0){
@@ -147,7 +154,7 @@ class EventController extends Controller
             $events = Event::find($id);
             $events->placeNumber = $events->placeNumber - 1;
             $events->save();
-                Ticket::create([
+            $ticket = Ticket::create([
                 'user_id' => auth()->user()->id,
                 'event_id' => $id,
                 'isAccept' => '1',
