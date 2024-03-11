@@ -124,10 +124,10 @@ class EventController extends Controller
                                 'quantity' => 1,
                             ]],
                             'mode' => 'payment',
-                            // 'success_url' => 'http://35.172.160.168/Payment/success/'.$id,
-                            // 'cancel_url' => 'http://35.172.160.168/Payment/error/'.$id,
-                            'success_url' => 'http://127.0.0.1:8000/Payment/success/'.$id,
-                            'cancel_url' => 'http://127.0.0.1:8000/Payment/error/'.$id,
+                            'success_url' => 'http://35.172.160.168/Payment/success/'.$id,
+                            'cancel_url' => 'http://35.172.160.168/Payment/error/'.$id,
+                            // 'success_url' => 'http://127.0.0.1:8000/Payment/success/'.$id,
+                            // 'cancel_url' => 'http://127.0.0.1:8000/Payment/error/'.$id,
                         ]);
                         return Redirect::away($checkout_session->url);
                     }else{
