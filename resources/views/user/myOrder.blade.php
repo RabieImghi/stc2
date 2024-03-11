@@ -31,7 +31,7 @@
                 <tr>
                     <th class="p-4">Event Name</th>
                     <th class="p-4">Date Event</th>
-                    <th class="p-4">Action</th>
+                    <th class="p-4 text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,8 +41,16 @@
                     <td class="p-4">{{$ticket->event->date}}</td>
                     <td class="p-4 d-flex
                         justify-content-center">
-                        <a href="/ticketDetail/{{$ticket->id}}" target='_blank' class="btn addPermission accept">View Ticket</a>
-                        <a href="/download/{{$ticket->id}}" class="mx-3 btn addPermission">Download Ticket</a>
+                        @if($ticket->isAccept == 1)
+                            @if($ticket->status == 'nonpaye')
+                                <a href="/payeTicket/{{$ticket->id}}/{{$ticket->event->price}}" class="btn addPermission">Paye</a>
+                            @else
+                                <a href="/ticketDetail/{{$ticket->id}}" target='_blank' class="btn addPermission accept">View Ticket</a>
+                                <a href="/download/{{$ticket->id}}" class="mx-3 btn addPermission">Download Ticket</a>
+                            @endif
+                        @else
+                            <span class="text-danger">Your Request is pending !! </span>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

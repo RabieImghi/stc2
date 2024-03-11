@@ -22,7 +22,7 @@ class EventController extends Controller
     }
     public function events(){
         $categories = Category::all();
-        $events = Event::where('isPublish', 'publish')->with('user')->paginate(6);
+        $events = Event::where('isPublish', 'publish')->with('user')->orderBy('id', 'desc')->paginate(5);
         return view('user.events', compact('events', 'categories'));
     }
     public function eventsDetail($id){
@@ -44,9 +44,12 @@ class EventController extends Controller
             'price'=> 'required',
             'acceptType'=> 'required|in:auto,man',
             'category_id' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
         ]);
-        
+        if($request->date < date('Y-m-d')){
+            session()->flash('error', 'The date must be greater than the current date');
+            return redirect('/AddEvent');
+        }
         $imageName = time().'.'.$request->image->extension();  
         $request->image->move(public_path('images'), $imageName);
         $event = new Event();
@@ -65,7 +68,7 @@ class EventController extends Controller
         return redirect('/Events');
     }
     public function GestionEvents(){
-        $events = Event::where('isPublish','NonPublish')->with('category')->with('user')->get();
+        $events = Event::where('isPublish','NonPublish')->with('category')->with('user')->paginate(4);
         return view('admin.gestionEvents', compact('events'));
     }
     public static function downloadTicket($id){
@@ -73,11 +76,12 @@ class EventController extends Controller
         $event = Ticket::where('id',$id)->with('event')->with('user')->first();
         $html = view('ticket', ['event' => $event])->render();
         $dompdf->loadHtml($html);
+        $dompdf->setPaper('A6','landscape');
         $dompdf->render();
         return Response::make($dompdf->output(), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'attachment; filename="ticket.pdf"',
-          ]);
+        ]);
 
     }
     public function RefuseAccepEvent($action){
@@ -100,64 +104,87 @@ class EventController extends Controller
     public function ReserveTickete($id){
         $events = Event::find($id);
         $price = $events->price*100;
-        if(Ticket::where('user_id', auth()->user()->id)->where('event_id',$id)->count() == 0){
-            Stripe::setApiKey('sk_test_51OgSVgE3Uo0XLWPtmjKABCTBt1OLGUKhViAW2WgEIEuYffBIpumE78nGP0kk1wDiDMJUckfL7PMRpTycyl7DYM9f00nhKSBVZE');
-            $checkout_session = Session::create([
-                'line_items' => [[
-                    'price_data' => [
-                    'currency' => 'usd',
-                    'product_data' => [
-                        'name' => 'T-shirt',
-                    ],
-                    'unit_amount' => $price,
-                    ],
-                    'quantity' => 1,
-                ]],
-                'mode' => 'payment',
-                'success_url' => 'http://127.0.0.1:8000/Payment/success/'.$id,
-                'cancel_url' => 'http://127.0.0.1:8000/Payment/error/'.$id,
-            ]);
-            return Redirect::away($checkout_session->url);
-        }else return redirect('/EventsDetails/'.$id);
+        if($events->date < date('Y-m-d')){
+            session()->flash('error', 'The date of the event has already passed');
+            return redirect('/EventsDetails/'.$id);
+        }
+        if($events->placeNumber > 0){
+            if($events->acceptType=='auto'){
+                    if(Ticket::where('user_id', auth()->user()->id)->where('event_id',$id)->count() == 0){
+                        Stripe::setApiKey('sk_test_51OgSVgE3Uo0XLWPtmjKABCTBt1OLGUKhViAW2WgEIEuYffBIpumE78nGP0kk1wDiDMJUckfL7PMRpTycyl7DYM9f00nhKSBVZE');
+                        $checkout_session = Session::create([
+                            'line_items' => [[
+                                'price_data' => [
+                                'currency' => 'usd',
+                                'product_data' => [
+                                    'name' => 'T-shirt',
+                                ],
+                                'unit_amount' => $price,
+                                ],
+                                'quantity' => 1,
+                            ]],
+                            'mode' => 'payment',
+                            'success_url' => 'http://35.172.160.168/Payment/success/'.$id,
+                            'cancel_url' => 'http://35.172.160.168/Payment/error/'.$id,
+                            // 'success_url' => 'http://127.0.0.1:8000/Payment/success/'.$id,
+                            // 'cancel_url' => 'http://127.0.0.1:8000/Payment/error/'.$id,
+                        ]);
+                        return Redirect::away($checkout_session->url);
+                    }else{
+                        session()->flash('error', 'You have already reserved a ticket for this event');
+                        return redirect('/EventsDetails/'.$id);
+                    } 
+                
+            }else{
+                Ticket::create([
+                    'user_id' => auth()->user()->id,
+                    'event_id' => $id,
+                    'isAccept' => '0',
+                    'status'=>'nonpaye'
+                ]);
+                session()->flash('success', 'Your request has been sent to the event owner');
+                return redirect('/EventsDetails/'.$id);
+            }
+        }else{
+            session()->flash('error', 'There are no more places available for this event');
+            return redirect('/EventsDetails/'.$id);
+        }
     }
     public function Reservation($action,$id){
         if($action=="success"){
             $events = Event::find($id);
-            if($events->placeNumber > 0){
-                if($events->acceptType == 'auto'){
-                    $events->placeNumber = $events->placeNumber - 1;
-                    $events->save();
-                     Ticket::create([
-                        'user_id' => auth()->user()->id,
-                        'event_id' => $id,
-                        'isAccept' => '1'
-                    ]);
-                    $mailData = [
-                        'title' => 'MailFrom Evento',
-                        'body' => 'Felicitation',
-                        'Code'=>'Felicitation You have successfully reserved a ticket for event : '.$events->title,
-                    ];
-                    Mail::to(auth()->user()->email)->queue(new SendMail($mailData));
-                    session()->flash('success', 'You have successfully reserved a ticket for this event');
-                    return redirect('/EventsDetails/'.$id);
-                }else{
-                    $events->placeNumber = $events->placeNumber - 1;
-                    $events->save();
-                    Ticket::create([
-                        'user_id' => auth()->user()->id,
-                        'event_id' => $id,
-                        'isAccept' => '0'
-                    ]);
-                    
-                    session()->flash('success', 'Your request has been sent to the event owner');
-                    return redirect('/EventsDetails/'.$id);
-                }
-                
-            }else{
-                session()->flash('error', 'You have already reserved a ticket for this event');
-                return redirect('/EventsDetails/'.$id);
-            } 
-        } 
+            $events->placeNumber = $events->placeNumber - 1;
+            $events->save();
+            $ticket = Ticket::create([
+                'user_id' => auth()->user()->id,
+                'event_id' => $id,
+                'isAccept' => '1',
+                'status'=>'paye'
+            ]);
+            $mailData = [
+                'title' => 'MailFrom Evento',
+                'body' => 'Felicitation',
+                'Code'=>'Felicitation You have successfully reserved a ticket for event : '.$events->title,
+            ];
+            Mail::to(auth()->user()->email)->queue(new SendMail($mailData));
+            session()->flash('success', 'You have successfully reserved a ticket for this event');
+            return redirect('/EventsDetails/'.$id);           
+        }else if($action=="successTicket"){
+            $ticket = Ticket::find($id);
+            $ticket->status = 'paye';
+            $ticket->save();
+            $event = Event::where('id',$ticket->event_id)->first();
+            $event->placeNumber = $event->placeNumber - 1;
+            $event->save();
+            $mailData = [
+                'title' => 'MailFrom Evento',
+                'body' => 'Felicitation',
+                'Code'=>'Felicitation You have successfully reserved a ticket for event : '.$ticket->event->title,
+            ];
+            Mail::to(auth()->user()->email)->queue(new SendMail($mailData));
+            session()->flash('success', 'You have successfully reserved a ticket for this event');
+            return redirect('/EventsDetails/'.$ticket->event_id);  
+        }
     }
     public function MyEventReservation($id){
         $events = Ticket::with('event')->whereHas('event', function ($query) {

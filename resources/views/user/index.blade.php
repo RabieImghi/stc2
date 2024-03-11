@@ -68,7 +68,7 @@
                             <input type="email" class="form-control" placeholder="example@gmail.com">
                         </div>
                         <div class="col-lg-3 col-sm-6">
-                            <a href="https://thetork.com/demos/html/uevent/signup.html"
+                            <a href="/login"
                                 class="default-btn  default-btn--secondary move-right"><span>Register
                                     <svg class="svg-inline--fa fa-arrow-right" aria-hidden="true" focusable="false"
                                         data-prefix="fas" data-icon="arrow-right" role="img"
@@ -76,7 +76,7 @@
                                         <path fill="currentColor"
                                             d="M438.6 278.6l-160 160C272.4 444.9 264.2 448 256 448s-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L338.8 288H32C14.33 288 .0016 273.7 .0016 256S14.33 224 32 224h306.8l-105.4-105.4c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160C451.1 245.9 451.1 266.1 438.6 278.6z">
                                         </path>
-                                    </svg><!-- <i class="fa-solid fa-arrow-right"></i> Font Awesome fontawesome.com --></span></a>
+                                    </svg></span></a>
                         </div>
                     </div>
                 </form>

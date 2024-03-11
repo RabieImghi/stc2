@@ -26,6 +26,11 @@ class AuthController extends Controller
         ]);
         
         if(auth()->attempt($request->only('email', 'password'))){
+            if(auth()->user()->isBane == 'baned'){
+                auth()->logout();
+                session()->flash('baned', 'Your account is baned');
+                return redirect('/login');
+            }
             if(auth()->user()->roles->first()->name == 'Administrateur'){
                 return redirect('/admin');
             }

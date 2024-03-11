@@ -26,13 +26,73 @@
 </section>
 <section class="team  pt-4 mt-4 padding-bottom" id="team" style="background-image:url(assets/images/team/bg.png)">
     <div class="container">
-        <table class="tabel me-4" style="width: 98.3%">
+        <div class="mt-3 cards d-flex flex-wrap gap-4 justify-content-between w-full  mx-3">
+            <div class="shadow rounded-1">
+                <div class="card border-0 info-card sales-card">
+                    <div class="card-body">
+                    <h5 class="card-title">Total <span>| Event</span></h5>
+        
+                    <div class="d-flex align-items-center">
+                        
+                        <div class="card_footr ml-2">
+                            <h6>{{$statistique['events']}}</h6>
+                        </div>
+                    </div>
+                </div>
+        
+                </div>
+            </div>
+            <div class="shadow rounded-1">
+                <div class="card border-0 info-card sales-card">
+                    <div class="card-body">
+                    <h5 class="card-title">Total <span>| Reservation</span></h5>
+        
+                    <div class="d-flex align-items-center">
+                        <div class="card_footr ml-2">
+                            <h6>{{$statistique['tickets']}}</h6>
+                            
+                        </div>
+                    </div>
+                </div>
+        
+                </div>
+            </div>
+            <div class="shadow rounded-1">
+                <div class="card border-0 info-card sales-card">
+                    <div class="card-body">
+                    <h5 class="card-title">Event | <span> Accepted</span></h5>
+        
+                    <div class="d-flex align-items-center">
+                        <div class="card_footr ml-2">
+                            <h6>{{$statistique['eventsAccepted']}}</h6>
+                        </div>
+                    </div>
+                </div>
+        
+                </div>
+            </div>
+            <div class="shadow rounded-1">
+                <div class="card border-0 info-card sales-card">
+                    <div class="card-body">
+                    <h5 class="card-title">Event <span>|  Non Accept</span></h5>
+        
+                    <div class="d-flex align-items-center">
+                        <div class="card_footr ml-2">
+                            <h6>{{$statistique['eventsNoneAccepted']}}</h6>
+                        </div>
+                    </div>
+                </div>
+        
+                </div>
+            </div>
+        </div>
+        <table class="tabel me-4 mt-3" style="width: 100%">
             <thead class="">
                 <tr>
                     <th class="p-4">User Name</th>
                     <th class="p-4">Event Name</th>
                     <th class="p-4">Is Publish</th>
-                    <th class="p-4">Action</th>
+                    <th class="p-4  text-center">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,7 +100,14 @@
                 <tr>
                     <td class="p-4">{{$event->user->name}}</td>
                     <td class="p-4">{{$event->title}}</td>
-                    <td class="p-4">{{$event->isPublish}}</td>
+                    <td class="p-4">
+                        @if($event->isPublish =='publish')
+                            <span class="p-2 rounded-1 accept">Accept</span>
+                        @else
+                            <span class="p-2  rounded-1 addPermission">Non Accept</span>
+                        @endif
+                    </td>
+                 
                     <td class="p-4 d-flex justify-content-center">
                         <a href="/updateMyEvent/{{$event->id}}" class="mx-3 btn btn-success">Update</a>
                         <a href="/deletMyEvent/{{$event->id}}" class="mx-3 btn addPermission">DELET</a>
@@ -49,6 +116,7 @@
                 @endforeach
             </tbody>
         </table>  
+        {{$events->links()}}
     </div>
 </section>
 @endsection

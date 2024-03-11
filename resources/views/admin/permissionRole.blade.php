@@ -76,6 +76,7 @@
         @endforeach
     </tbody>
 </table>
+{{$roles->links()}}
 <style>
     
     .show {

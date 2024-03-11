@@ -26,18 +26,18 @@ class UserContreoller extends Controller
         return view('user.eror404');
     }
     public function permissionUser(){
-        $users = User::with('permissions')->with('roles')->get();
+        $users = User::with('permissions')->with('roles')->paginate(2);
         $permissions = Permission::all();
         return view('admin.permissionUser', compact('users', 'permissions'));
     }
     public function PermissionRole(){
-        $roles = Role::with('permissions')->get();
+        $roles = Role::with('permissions')->paginate(2);
         $permissions = Permission::all();
         return view('admin.permissionRole', compact('roles', 'permissions'));
     }
     public function GestionUsers(){
         $roles = Role::all();
-        $users = User::with('roles')->get();
+        $users = User::with('roles')->paginate(3);
         return view('admin.GestionUsers', compact('users','roles'));
     }
     public function deleteUser(Request $request){
@@ -56,7 +56,22 @@ class UserContreoller extends Controller
         ]);
         $userId = $request->user_idd;
         $user = User::find($userId);
+        $user->permissions()->detach();
+        $permssionId = Role::where('id',$request->role_id)->with('permissions')->first()->permissions->pluck('id')->toArray();
+        foreach($permssionId as $id){
+            $user->permissions()->attach($id);
+        }
         $user->roles()->sync($request->role_id);
+        return redirect('/GestionUsers');
+    }
+    public function BaneUser($id){
+        $user = User::find($id);
+        if($user->isBane == 'baned'){
+            $user->isBane = 'nonBaned';
+        }else{
+            $user->isBane = 'baned';
+        }
+        $user->save();
         return redirect('/GestionUsers');
     }
 }
