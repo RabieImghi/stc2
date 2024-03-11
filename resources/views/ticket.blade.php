@@ -4,29 +4,38 @@
     <title>Ticket</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-            padding: 0;
+            background: url('path_to_your_image.jpg') no-repeat center center fixed; 
+            background-size: cover;
         }
 
         .ticket {
-            width: 400px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f9f9f9;
+            width: 105mm;
+            box-sizing: border-box;
+            padding: 10mm;
+            border: 1px solid #000;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
         }
 
         .event-name {
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 10px;
+            text-align: center;
+            color: #2C3E50;
         }
 
         .event-details {
             font-size: 16px;
             margin-bottom: 20px;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
         }
 
         .ticket-info {
@@ -42,6 +51,7 @@
 
         .ticket-info .label {
             font-weight: bold;
+            color: #34495E;
         }
 
         .barcode {
@@ -50,7 +60,7 @@
         }
 
         .barcode img {
-            width: 150px;
+            width: 100%;
         }
     </style>
 </head>
@@ -70,6 +80,9 @@
                 <span class="label">Location:</span>
                 <span>{{ $event->event->adresse }}</span>
             </div>
+        </div>
+        <div class="barcode">
+            <img src="data:image/png;base64,{{ \DNS1D::getBarcodePNG('4445645656', 'C39+') }}" alt="barcode" />
         </div>
     </div>
 </body>
